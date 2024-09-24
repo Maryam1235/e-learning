@@ -4,7 +4,7 @@
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper back">
+  <div class="content-wrapper back custom-dashboard">
     
     <!-- Content Header (Page header) -->
     <section class="content-header">

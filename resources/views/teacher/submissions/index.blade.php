@@ -2,7 +2,7 @@
 
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-dashboard">
 
 @foreach($submissions as $submission)
     <h2>Assignment ID: {{ $submission->assignment_id }}</h2>

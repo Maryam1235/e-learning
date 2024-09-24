@@ -3,7 +3,7 @@
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper custom-dashboard">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -129,7 +129,7 @@
        
 
             <!-- TO DO List -->
-            <div class="card">
+            {{-- <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
@@ -256,7 +256,7 @@
               <div class="card-footer clearfix">
                 <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
               </div>
-            </div>
+            </div> --}}
             <!-- /.card -->
           </section>
           <!-- /.Left col -->

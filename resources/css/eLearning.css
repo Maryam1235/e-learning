@@ -580,5 +580,19 @@ h1{
     flex-grow: 1;
 }
 
+.custom-dashboard{
+    background-image: url('../../public/images/online.jpg'); 
+    background-size:cover; 
+    background-position:center;
+
+   
+}
+
+.custom-student{
+    background-image: url('../../public/images/online.jpg'); 
+    background-size:cover; 
+    background-position:center;
+}
+
   
 

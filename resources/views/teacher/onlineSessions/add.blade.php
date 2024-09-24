@@ -2,7 +2,7 @@
 
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-dashboard">
 <main>
     <div class="form-container">
 

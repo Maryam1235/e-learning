@@ -276,7 +276,7 @@
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper custom-dashboard">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -341,7 +341,7 @@
 
                   
                     <div class="chat-message clearfix">
-                        <form id="message-form" action="{{ route('teacher.blog.store') }}" method="POST">
+                        <form id="message-form" action="{{ route('blogs.store') }}" method="POST">
                             @csrf
                             <div class="input-group mb-0">
                                 <input type="text" name="message" class="form-control" placeholder="Enter text here..." required>

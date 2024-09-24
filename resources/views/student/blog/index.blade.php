@@ -271,7 +271,7 @@
 }
  </style>
  
- <div class="content-wrapper">
+ <div class="content-wrapper custom-student">
 <div class="container">
     <div class="row clearfix">
         <div class="col-lg-12">

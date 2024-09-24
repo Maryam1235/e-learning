@@ -267,6 +267,7 @@
                 </div>
             </nav>
         </aside>
+        
                 @yield('body')
             
            

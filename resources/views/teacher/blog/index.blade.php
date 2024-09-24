@@ -274,7 +274,7 @@
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper custom-dashboard">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -306,8 +306,6 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-
- 
 
  
  <div class="card-body">
@@ -378,3 +376,11 @@
 
 
 @endsection
+
+
+
+
+
+
+
+

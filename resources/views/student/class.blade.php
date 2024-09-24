@@ -2,7 +2,7 @@
 
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-student">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Subjects Registered for {{$student->name}}</h1>
 

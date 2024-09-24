@@ -1,7 +1,7 @@
 @extends('components.dashmaster')
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-dashboard">
 <div class="col-12">
     <div class="welcome-message bg-light p-4 rounded">
         <div class="container mt-5">

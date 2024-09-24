@@ -2,7 +2,7 @@
 
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-dashboard">
 <h1>{{ $assignment->title }}</h1>
 <p>{{ $assignment->description }}</p>
 <p>Deadline: {{ $assignment->submission_deadline }}</p>

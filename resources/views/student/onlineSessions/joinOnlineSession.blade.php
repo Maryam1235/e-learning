@@ -2,7 +2,7 @@
 
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-student">
 <div class="container">
 <div class="col-12">
     <div class="welcome-message bg-light p-4 rounded">

@@ -1,7 +1,7 @@
 @extends('components.dashmaster')
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-student">
 <div class="background"></div>
 <div class="sub"> 
     <div class="form-container">

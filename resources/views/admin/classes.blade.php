@@ -4,7 +4,7 @@
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper custom-dashboard">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -13,7 +13,7 @@
             <h1>Classes Management</h1>
           </div>
           <div class="col-sm-6 ">
-           <a href="/addUser"> <i class="fa fa-plus"> </i> New class</a>
+           <a href="/addClass"> <i class="fa fa-plus"> </i> New class</a>
           </div>
         </div>
       </div><!-- /.container-fluid -->

@@ -1,7 +1,7 @@
 @extends('components.dashmaster')
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-dashboard">
     <div class="container">
         <h2>{{ $quiz->title }}</h2>
         <p><strong>Description:</strong> {{ $quiz->description }}</p>
