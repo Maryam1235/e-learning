@@ -48,16 +48,18 @@
                     <td>{{ optional($user->schoolClass)->name ?? 'No class assigned' }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                      <a href="/viewUser/{{$user->id}}" role="button" class="ml-1 editPack"><i class="text-success fa fa-eye"></i></a>
-                      <a href="/editUser/{{$user->id}}" role="button" class="ml-1 editPack"><i class="text-primary fa fa-edit"></i></a>
-                      <a href="#" onclick="event.preventDefault(); document.getElementById('deleteUser-form--{{$user-> id}}').submit();">
-                          <i class="text-danger fa fa-trash" > 
-                          <span class="d-none d-md-inline-block"> </span></i>
-                      </a>
-                      <form id="deleteUser-form--{{$user-> id}}" action="/deleteUser/{{$user->id}}" method="POST" style="display: none;">
+                      <a href="/viewUser/{{$user->id}}" role="button" class="btn btn-info btn-sm" ><i class="text-success fa fa-eye"></i></a>
+                      <a href="/editUser/{{$user->id}}" role="button" class="btn btn-warning btn-sm"><i class="text-primary fa fa-edit"></i></a>
+    
+                      <form action="/deleteUser/{{$user->id}}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
-                      </form>
+                          <button onclick="return confirm('Are you sure you want to delete this user?')" class="btn btn-danger btn-sm">
+                              <i class="text-danger fa fa-trash" > 
+                              <span class="d-none d-md-inline-block"> </span></i>
+                          </button>
+                        </form>
+                     
                     </td>
                   </tr>
                   @endforeach

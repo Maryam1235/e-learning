@@ -167,15 +167,7 @@
                           <td>
                             <a href="{{ route('quizzes.show', $quiz->id) }}" role="button" class="btn btn-info btn-sm" ><i class="text-success fa fa-eye"></i></a>
                             <a href="{{ route('quizzes.edit', $quiz->id) }}" role="button" class="btn btn-warning btn-sm"><i class="text-primary fa fa-edit"></i></a>
-                            {{-- <a href="#" onclick="event.preventDefault(); document.getElementById('deleteUser-form--{{$quiz->id}}').submit();" class="btn btn-danger btn-sm">
-                                <i class="text-danger fa fa-trash" > 
-                                <span class="d-none d-md-inline-block"> </span></i>
-                            </a> --}}
-                            
-                            {{-- <form id="deleteUser-form--{{$quiz->id}}" action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                            </form> --}}
+
 
                             <form action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" style="display:inline;">
                                 @csrf
@@ -186,18 +178,7 @@
                                 </button>
                               </form>
                            
-                          </td>
-                          {{-- <td>
-                            <a href="{{ route('quizzes.show', $quiz->id) }}" class="btn btn-info btn-sm">View</a>
-                            <a href="{{ route('quizzes.edit', $quiz->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            
-                            <!-- Delete Form -->
-                            <form action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" style="display:inline;">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
-                          </td> --}}
+
                         </tr>
                       @endforeach
                     </tbody>

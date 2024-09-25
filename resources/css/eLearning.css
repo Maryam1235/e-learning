@@ -186,6 +186,29 @@ h1{
         padding: 10px;
         border-radius: 5px;
     }
+
+    .carousel-item {
+        position: relative; /* To position the overlay correctly */
+    }
+    
+    .carousel-item::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%; /* Adjust to control the size of the gradient */
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+        z-index: 1; /* Make sure the gradient is below the text */
+    }
+    
+    .carousel-caption {
+        position: absolute;
+        bottom: 20px; /* Position the caption text at the bottom */
+        z-index: 2;   /* Ensure the text is above the gradient */
+        color: #fff;  /* Set text color to stand out against the gradient */
+    }
+    
     
 /* -------------------------------------
          button-css

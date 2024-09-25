@@ -15,6 +15,12 @@ class OnlineSessionController extends Controller
         return view('teacher.onlineSessions.index', compact('online_sessions'));
     }
 
+    public function adminIndex()
+    {
+        $online_sessions = OnlineSession::all();
+        return view('admin.onlineSessions.index', compact('online_sessions'));
+    }
+
     public function studentIndex()
     {
         return view('student.onlineSessions.joinOnlineSession');
@@ -23,6 +29,11 @@ class OnlineSessionController extends Controller
     public function onlineSessionForm()
     {
         return view('teacher.onlineSessions.add');
+    }
+
+    public function adminOnlineSessionForm()
+    {
+        return view('adminn.onlineSessions.add');
     }
 
     public function createMeeting()
@@ -39,6 +50,22 @@ class OnlineSessionController extends Controller
         ]);
 
         return view('teacher.onlineSessions.meeting', ['meeting' => $meeting]);
+    }
+
+    public function adminCreateMeeting()
+    {
+        $meetingCode = Str::random(8);
+        
+        $meetingUrl = "https://meet.jit.si/" . $meetingCode;
+
+
+        $meeting = OnlineSession::create([
+            'meeting_code' => $meetingCode,
+            'meeting_url' => $meetingUrl,
+            'teacher_id' => Auth::id(),
+        ]);
+
+        return view('admin.onlineSessions.meeting', ['meeting' => $meeting]);
     }
 
     public function joinMeeting(Request $request)

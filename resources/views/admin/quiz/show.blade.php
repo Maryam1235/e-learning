@@ -34,8 +34,8 @@
             <p>No questions added yet.</p>
         @endif
 
-        <a href="{{ route('quizzes.edit', $quiz->id) }}" class="btn btn-primary mt-4">Edit Quiz</a> 
-        <a href="{{ route('quizzes.index') }}" class="btn btn-primary mt-4">Go Back</a>
+        <a href="{{ route('admin.quizzes.edit', $quiz->id) }}" class="btn btn-primary mt-4">Edit Quiz</a> 
+        <a href="{{ route('admin.quizzes.index') }}" class="btn btn-primary mt-4">Go Back</a>
     </div>
 </div>
 @endsection

@@ -39,7 +39,7 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::get('/addUser', [AdminController::class, 'userForm']);
     Route::post('/user/add', [AdminController::class, 'addUser'])->name('admin.addUser');
     Route::get('/viewUser/{user}',[AdminController::class, 'viewUser']);
-    Route::get('/editUser/{user}', [AdminController::class, 'editForm']);
+    Route::get('/editUser/{user}', [AdminController::class, 'editForm'])->name('admin.editUserForm');
     Route::put('/editedUser/{user}', [AdminController::class, 'updatedUser']);
     Route::delete('/deleteUser/{user}', [AdminController::class, 'destroy']);
 
@@ -53,6 +53,10 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::post('/viewClass/{school_class}/storeSubject', [SchoolClassController::class, 'addSubject'])->name('storeSubject');
     Route::delete('/deleteSubject/{subject}', [SchoolClassController::class, 'destroySubject']);
 
+    Route::get('/admin/onlineSessions', [OnlineSessionController::class, 'adminIndex'])->name('admin.onlineSessions');
+    Route::get('/admin/create-meeting', [OnlineSessionController::class, 'adminCreateMeeting'])->name('admin.createMeeting');
+
+
     Route::get('/admin/reports',[ReportController::class, 'reports'])->name('admin.report');
     Route::get('/admin/user-report',[ReportController::class, 'userReport'])->name('admin.user.reports');
     Route::get('/admin/user-report-print',[ReportController::class, 'userReportPrint'])->name('admin.reportPrint');
@@ -64,7 +68,16 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::post('/admin/class/{class}/subject/{subject}/materials/upload', [MaterialController::class, 'addMaterial'])->name('adminMaterials.store');
 
     
-    // Route::delete('/deleteMaterial/{material}', [MaterialController::class, 'destroyMaterial']);
+    //quizzes
+    Route::get('/admin/quizzes', [QuizController::class, 'adminIndex'])->name('admin.quizzes.index'); 
+    Route::get('/admin/quizzes/create', [QuizController::class, 'adminCreateQuiz'])->name('admin.quizzes.create');
+    Route::get('/admin/get-subjects/{classId}', [QuizController::class, 'getSubjectsByClass']);
+    Route::post('/admin/quizzes', [QuizController::class, 'adminStoreQuiz'])->name('admin.quizzes.store');      
+    Route::get('/admin/quizzes/{quiz}', [QuizController::class, 'adminShowQuiz'])->name('admin.quizzes.show');  
+    Route::get('/admin/quizzes/{quiz}/edit', [QuizController::class, 'adminEditQuiz'])->name('admin.quizzes.edit'); 
+    Route::put('/admin/quizzes/{quiz}', [QuizController::class, 'UpdateQuiz'])->name('admin.quizzes.update');  
+    Route::delete('/admin/quizzes/{quiz}', [QuizController::class, 'adminDestroyQuiz'])->name('admin.quizzes.destroy'); 
+
 
 
     //blog 
@@ -73,6 +86,10 @@ Route::middleware(['auth','role:admin'])->group(function (){
    
 
 });
+
+
+
+
 
 
 Route::middleware(['auth','role:teacher'])->group(function (){
@@ -131,12 +148,7 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     //quizzes
     Route::get('/teacher/quizzes', [QuizController::class, 'index'])->name('quizzes.index'); 
     Route::get('/teacher/quizzes/create', [QuizController::class, 'createQuiz'])->name('quizzes.create');
-    // Route::get('/subjects/{class}', [QuizController::class, 'getSubjects']);
-    // routes/web.php
-// Route::get('/get-subjects/{classId}', [AssignmentController::class, 'getSubjects']);
-
     Route::get('/get-subjects/{classId}', [QuizController::class, 'getSubjectsByClass']);
-
     Route::post('/teacher/quizzes', [QuizController::class, 'storeQuiz'])->name('quizzes.store');      
     Route::get('/teacher/quizzes/{quiz}', [QuizController::class, 'showQuiz'])->name('quizzes.show');  
     Route::get('/teacher/quizzes/{quiz}/edit', [QuizController::class, 'editQuiz'])->name('quizzes.edit'); 

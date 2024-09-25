@@ -21,7 +21,14 @@
                     <h2>Role :</h2>
                     <h4>{{$user->role}}</h4>
                 </div>
-                   
+                <div >
+                <button type="submit" class="btn btn-success btn-primary mt-3 text-center px-3" onclick="window.location.href='/editUser/{{$user->id}}' ">
+                    Edit User 
+                </button>
+                <button type="button" class="btn btn-primary mt-3 text-center px-3" onclick="window.location.href='{{ route('admin.users') }}'">
+                    Go Back
+                </button>
+                </div> 
 
 
                  

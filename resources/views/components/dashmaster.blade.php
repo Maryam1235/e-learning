@@ -62,14 +62,14 @@
                             </li><br>
                             <li class="nav-item">
                                 <a class="nav-link "
-                                    href="#">
+                                    href="{{route('admin.quizzes.index')}}">
                                     <span class="nav-icon fa fa-file-text "></span>
-                                    <p>Quizzes and Exams</p>
+                                    <p>Quizzes</p>
                                 </a>
                             </li><br>
                             <li class="nav-item">
                                 <a class="nav-link "
-                                    href="#">
+                                    href="{{ route('admin.onlineSessions') }}">
                                     <span class="nav-icon fa fa-chalkboard-teacher"></span>
                                     <p>Live Session</p>
                                 </a>
