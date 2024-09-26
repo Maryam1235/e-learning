@@ -2,7 +2,7 @@
 
 
 @section('body')
-<div class="content-wrapper">
+<div class="content-wrapper custom-dashboard">
             <!-- TO DO List -->
             <div class="card">
                 <div class="card-header">

@@ -1,9 +1,14 @@
 {{-- @extends('components.dashmaster') --}}
- <x-layout />
+ {{-- <x-layout />
 @include('partials.header')
 <div class="background">
-</div>
-<div id="log">
+</div> --}}
+@extends('components.dashmaster')
+@section('body')
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper custom-dashboard">
+<div id="Alog">
     <p >
            <b> WELCOME TO SUMAJKT eLEARNING MANAGEMENT SYSTEM </b>
     </p>
@@ -41,6 +46,8 @@
     </div>
 </div>
 
+</div>
+
 <script>
     document.getElementById('role').addEventListener('change', function () {
         const classSelect = document.getElementById('class_id');
@@ -54,3 +61,4 @@
     });
     
 </script>
+@endsection

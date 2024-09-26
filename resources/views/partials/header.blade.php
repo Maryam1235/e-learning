@@ -6,9 +6,9 @@
         
     </div>
     <div>
-   <b> <h1>SHIRIKA LA UZALISHAJI MALI LA JESHI LA KUJENGA TAIFA (SUMAJKT)</h1>
+   <b> <h1 style="color: rgba(2, 82, 2, 0.99);">SHIRIKA LA UZALISHAJI MALI LA JESHI LA KUJENGA TAIFA (SUMAJKT)</h1>
 
-        <h1>E-Learning Management System</h1>
+        <h1 style="color: rgba(2, 82, 2, 0.99);">E-Learning Management System</h1>
     </b>    
     </div>
     

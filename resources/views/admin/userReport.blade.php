@@ -1,6 +1,7 @@
 @extends('components.dashmaster')
 
 @section('body')
+<div class="content-wrapper custom-dashboard">
      <!-- Main Content -->
      <div class="main-content">
       <section class="section">
@@ -49,4 +50,5 @@
           </div>
       </section>
   </div>
+  <div>
 @endsection

@@ -1,7 +1,5 @@
-<x-layout />
-@extends('components.dashmaster')
-@include('components.nav')
 
+@extends('components.dashmaster')
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->

@@ -1,49 +1,53 @@
-<x-layout />
-@include('partials.header')
-<div class="background"></div>
 
-<div class="padding"> 
-    
-    <a href="{{ route('admin.subjects', [$class, $subject]) }}" class="btn btn-secondary link">Return to Subject</a>
-    
-    <div class="form-container">
-    <h2>Upload Material for Subject: {{ $subject->name }}</h2>
-    <form method="POST" id="material-form" action="{{ route('adminMaterials.store',  ['class' => $class->id, 'subject' => $subject->id]) }}" enctype="multipart/form-data" >
-        @csrf
-        <div>
-            <label for="title">Material Title:</label><br>
-            <input type="text" name="title" id="title" required><br>
-        </div>
-        <br>
-        <div> 
-            <label for="type">Material Type:</label><br>
-            <select name="type" id="type" required>
-                <option value="" selected disabled>Choose Material Type</option>
-                <option value="document">Document</option>
-                <option value="link">Link</option>
-                <option value="video">Video</option>
-            </select>
-        </div>
-        <br>
-        <div id="file-input" style="display: none;">
-            <label for="file">Upload File (Document/Video):</label><br>
-            <input type="file" name="file" id="file">
-        </div>
-        <br>
-        <div id="url-input" style="display: none;">
-            <label for="url">Material Link:</label><br>
-            <input type="url" name="url" id="url">
-        </div>
-        <br>
-        <input type="hidden" name="class_id" value="{{ $class->id }}">
-        <input type="hidden" name="subject_id" value="{{ $subject->id }}">  
-        <div>
-            <input type="submit" value="Upload">
-        </div>
+@extends('components.dashmaster')
+@section('body')
 
-    </form>
-</div>
-</div>
+  <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper custom-dashboard">
+
+        <div class="Apadding-c"> 
+            
+            <a href="{{ route('admin.subjects', [$class, $subject]) }}" class="btn btn-secondary link">Return to Subject</a>
+            
+            <div class="form-container">
+            <h2>Upload Material for Subject: {{ $subject->name }}</h2>
+            <form method="POST" id="material-form" action="{{ route('adminMaterials.store',  ['class' => $class->id, 'subject' => $subject->id]) }}" enctype="multipart/form-data" >
+                @csrf
+                <div>
+                    <label for="title">Material Title:</label><br>
+                    <input type="text" name="title" id="title" required><br>
+                </div>
+                <br>
+                <div> 
+                    <label for="type">Material Type:</label><br>
+                    <select name="type" id="type" required>
+                        <option value="" selected disabled>Choose Material Type</option>
+                        <option value="document">Document</option>
+                        <option value="link">Link</option>
+                        <option value="video">Video</option>
+                    </select>
+                </div>
+                <br>
+                <div id="file-input" style="display: none;">
+                    <label for="file">Upload File (Document/Video):</label><br>
+                    <input type="file" name="file" id="file">
+                </div>
+                <br>
+                <div id="url-input" style="display: none;">
+                    <label for="url">Material Link:</label><br>
+                    <input type="url" name="url" id="url">
+                </div>
+                <br>
+                <input type="hidden" name="class_id" value="{{ $class->id }}">
+                <input type="hidden" name="subject_id" value="{{ $subject->id }}">  
+                <div>
+                    <input type="submit" value="Upload">
+                </div>
+
+               </form>
+            </div>
+        </div>
+    <div>
 
 <script>
     document.getElementById('type').addEventListener('change', function() {
@@ -89,4 +93,6 @@
     });
 });
 </script>
+
+@endsection
 

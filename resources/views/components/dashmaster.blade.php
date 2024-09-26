@@ -228,7 +228,7 @@
                             <li class="nav-item">
                                 <a class="nav-link"
                                     href="{{ route('student.class') }}">
-                                    <span class="fa fa-school fa-2x"></span>
+                                    <span class="fa fa-school"></span>
                                     <p>Class</p>
                                 </a>
                             </li><br>

@@ -9,9 +9,9 @@
 <div class="slider-container">
 <div class="col-md-10">
  <div class="card">
-        {{-- <div class="card-header">
-         <h3 class="card-title">Carousel with captions</h3>
-        </div> --}}
+        <div class="card-header">
+         {{-- <h3 class="card-title">Carousel with captions</h3> --}}
+        </div>
 <div class="card-body">
 <div id="carouselExampleCaptions"   data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-indicators">
@@ -23,8 +23,8 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
   </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
+  <div class="carousel-inner overlay-gradient">
+    <div class="carousel-item active ">
       <img src="{{ asset('images/IMG16.jpg') }}" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>

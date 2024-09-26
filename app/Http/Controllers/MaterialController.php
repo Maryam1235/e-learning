@@ -16,41 +16,41 @@ class MaterialController extends Controller
         ]);
     }
     public function addMaterial(Request $request,  SchoolClass $class, Subject $subject)
-{
- 
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'type' => 'required|in:document,link,video',
-        'file' => 'required_if:type,document,video|mimes:pdf,docx,doc,zip,mp4,avi,mov|max:92160', // Allow PDF for documents and MP4 for videos
-        'url' => 'nullable|url',
-        'class_id' => 'required|exists:school_classes,id',
-        'subject_id' => 'required|exists:subjects,id'
-    ]);
+    {
+    
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:document,link,video',
+            'file' => 'required_if:type,document,video|mimes:pdf,docx,doc,zip,mp4,avi,mov|max:92160', // Allow PDF for documents and MP4 for videos
+            'url' => 'nullable|url',
+            'class_id' => 'required|exists:school_classes,id',
+            'subject_id' => 'required|exists:subjects,id'
+        ]);
 
 
-    $filePath = null;
-    $url = null;
+        $filePath = null;
+        $url = null;
 
-    if ($request->type === 'document' || $request->type === 'video') {
-        if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('materials');
+        if ($request->type === 'document' || $request->type === 'video') {
+            if ($request->hasFile('file')) {
+                $filePath = $request->file('file')->store('materials');
+            }
         }
+
+
+        if ($request->type === 'link') {
+            $url = $request->url;
+        }
+
+        Material::create([
+            'title' => $request->title,
+            'type' => $request->type,
+            'file_path' => $filePath,
+            'url' => $url,
+            'subject_id' => $subject->id,
+            'class_id' => $class->id
+        ]);
+        return response()->json(['message' => 'Material uploaded successfully']);
     }
-
-
-    if ($request->type === 'link') {
-        $url = $request->url;
-    }
-
-    Material::create([
-        'title' => $request->title,
-        'type' => $request->type,
-        'file_path' => $filePath,
-        'url' => $url,
-        'subject_id' => $subject->id,
-        'class_id' => $class->id
-    ]);
-    return response()->json(['message' => 'Material uploaded successfully']);
-}
 
 }

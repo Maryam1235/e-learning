@@ -1,8 +1,10 @@
 @extends('components.dashmaster')
+@section('body')
 
-<div class="background"></div>
+{{-- <div class="background"></div> --}}
+<div class="content-wrapper custom-dashboard">
 
-<div class="padding"> 
+<div class="Apadding-c"> 
     <a href="{{ route('teacher.subjects', [$class, $subject]) }}" class="btn btn-secondary">Return to Subject</a>
     
     <div class="form-container">
@@ -41,6 +43,7 @@
         </div>
 
     </form>
+</div>
 </div>
 </div>
 
@@ -88,3 +91,4 @@
     });
 });
 </script>
+@endsection
