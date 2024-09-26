@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 // use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
@@ -150,6 +151,16 @@ public function addMaterial(Request $request,  SchoolClass $class, Subject $subj
     ]);
     return response()->json(['message' => 'Material uploaded successfully']);
 }
+
+public function showMaterial(Material $material)
+{
+    if (!Storage::exists($material->file_path)) {
+        return abort(404, 'File not found.');
+    }
+
+    return response()->file(Storage::path($material->file_path));
+}
+
 
 
 //blog 

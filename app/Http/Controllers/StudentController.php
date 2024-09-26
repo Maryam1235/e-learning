@@ -50,6 +50,15 @@ class StudentController extends Controller
         return Storage::download($material->file_path);
     }
 
+    public function viewMaterial(Material $material)
+    {
+        if (!Storage::exists($material->file_path)) {
+            return abort(404, 'File not found.');
+        }
+    
+        return response()->file(Storage::path($material->file_path));
+    }
+
     //blog 
 public function blog()
 {

@@ -33,7 +33,7 @@
                   <tr>
                     <th>Title</th>
                     <th>Link/File</th>
-                    {{-- <th>View</th> --}}
+                    <th>View</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -49,6 +49,7 @@
                             <a href="{{ $material->url }}" target="_blank">Visit Link</a>
                         @endif
                     </td>
+                    <td><a href="{{ route('material.show', $material->id) }}">View</a></td>
                   </tr>
                   @empty
                   <tr>

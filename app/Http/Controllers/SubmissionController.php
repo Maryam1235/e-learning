@@ -6,6 +6,7 @@ use App\Models\Assignment;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SubmissionController extends Controller
 {
@@ -34,4 +35,13 @@ class SubmissionController extends Controller
             'submissions' => $submissions
         ]);
     }
+
+    public function showSubmission(Submission $submission)
+{
+    if (!Storage::exists($submission->file_path)) {
+        return abort(404, 'File not found.');
+    }
+
+    return response()->file(Storage::path($submission->file_path));
+}
 }

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use App\Models\Subject;
+use App\Models\QuizResult;
 use App\Models\UserAnswer;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -19,6 +21,17 @@ class QuizController extends Controller
     {
         $quizzes = Quiz::all();
         return view('admin.quiz.index', compact('quizzes'));
+    }
+
+    public function studentIndex()
+    {
+
+    $student =Auth::user(); 
+
+    $classId = $student->class_id; 
+    $quizzes = Quiz::where('class_id', $classId)->get(); 
+
+    return view('student.quiz.index', compact('quizzes'));
     }
 
     public function showQuiz(Quiz $quiz)
@@ -287,27 +300,95 @@ public function adminDestroyQuiz(Quiz $quiz)
 }
 
 
+public function startQuiz(Quiz $quiz)
+{
+    // Retrieve the quiz questions along with options
+    $questions = $quiz->questions;
+
+    // Pass the quiz and questions to the view
+    return view('student.quizzes.start', compact('quiz', 'questions'));
+}
 
 
 
     public function takeQuiz(Quiz $quiz)
     {
-        return view('quizzes.take', compact('quiz'));
+        $questions = $quiz->questions;
+        return view('student.quiz.start', compact('quiz','questions'));
     }
 
     public function submitQuiz(Request $request, Quiz $quiz)
     {
-        foreach ($request->input('questions') as $question_id => $selected_option) {
-            UserAnswer::create([
-                'user_id' => auth()->id(),
-                'quiz_id' => $quiz->id,
-                'question_id' => $question_id,
-                'selected_option' => $selected_option
-            ]);
+        // Retrieve the student's ID (assuming the student is authenticated)
+        $studentId = auth()->user()->id;
+
+        // Retrieve the submitted answers
+        $submittedAnswers = $request->input('answers');
+
+        // Initialize the score and total number of questions
+        $score = 0;
+        $totalQuestions = $quiz->questions->count();
+
+        // Iterate through the quiz questions
+        foreach ($quiz->questions as $question) {
+            // Check if the student submitted an answer for this question
+            if (isset($submittedAnswers[$question->id])) {
+                $submittedAnswer = $submittedAnswers[$question->id];
+
+                // Check if the submitted answer matches the correct answer
+                if ($submittedAnswer == $question->correct_answer) {
+                    $score++; // Increase the score for a correct answer
+                }
+            }
         }
 
-        return redirect()->route('quizzes.index')->with('message', 'Quiz submitted!');
+        // Calculate the percentage score
+        $percentageScore = ($score / $totalQuestions) * 100;
+
+        // Save the quiz result for the student in the database
+        $quizResult = new QuizResult();
+        $quizResult->quiz_id = $quiz->id;
+        $quizResult->student_id = $studentId;
+        $quizResult->score = $score;
+        $quizResult->total_questions = $totalQuestions;
+        $quizResult->percentage = $percentageScore;
+        $quizResult->save();
+
+        // Redirect to a results page or back to the quizzes page with a success message
+        return redirect()->route('quizzes.results', $quiz->id)
+                        ->with('success', 'Quiz submitted successfully! Your score is ' . $percentageScore . '%.');
     }
+    public function showQuizResults(Quiz $quiz)
+    {
+        // Retrieve the quiz result for the logged-in student
+        $studentId = auth()->user()->id;
+        $quizResult = QuizResult::where('quiz_id', $quiz->id)
+                                ->where('student_id', $studentId)
+                                ->firstOrFail();
+
+        // Pass the result to the view
+        return view('student.quiz.results', compact('quizResult'));
+    }
+
+
+
+    // public function submitQuiz(Request $request, Quiz $quiz)
+    // {
+    //     foreach ($request->input('questions') as $question_id => $selected_option) {
+    //         UserAnswer::create([
+    //             'user_id' => auth()->id(),
+    //             'quiz_id' => $quiz->id,
+    //             'question_id' => $question_id,
+    //             'selected_option' => $selected_option
+    //         ]);
+    //     }
+
+    //     return redirect()->route('quizzes.index')->with('message', 'Quiz submitted!');
+    // }
+
+
+
+  
 
 
 }

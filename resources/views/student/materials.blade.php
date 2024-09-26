@@ -19,7 +19,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Download</th>  
+                                        <th scope="col">Download</th> 
+                                        <th scope="col">View</th>   
                                     </tr>
                                    
                                 </thead>
@@ -35,6 +36,7 @@
                                                 <td>
                                                     <a href="{{ route('student.materials.download', $material->id) }}">Download</a>
                                                 </td>
+                                                <td><a href="{{ route('student.material.open', $material->id) }}">View</a></td>
                                             </tr>   
                                         @endforeach
                                 @endif

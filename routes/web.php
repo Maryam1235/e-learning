@@ -107,6 +107,7 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/class/{class}/subject/{subject}', [TeacherController::class, 'viewSubject'])->name('teacher.subjects');
     Route::get('/class/{class}/subject/{subject}/materials/upload', [TeacherController::class, 'materialForm'])->name('teacherMaterials.upload');
     Route::post('/class/{class}/subject/{subject}/materials/upload', [TeacherController::class, 'addMaterial'])->name('teacherMaterials.store');
+    Route::get('/showMaterial/{material}',[TeacherController::class, 'showMaterial'])->name('material.show');
 
 
     //assignment
@@ -119,6 +120,7 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/teacher/assignments/{assignment}/view', [AssignmentController::class, 'viewAssignment'])->name('teacher.assignment.open');
     Route::get('submissions', [SubmissionController::class, 'index'])->name('teacher.submissions');
     Route::post('assignments/{assignment}/submissions', [SubmissionController::class, 'store'])->name('submissions.store');
+    Route::get('submissions/view/{submission}', [SubmissionController::class, 'showSubmission'])->name('submission.show');
 
 
     //blog
@@ -178,8 +180,14 @@ Route::middleware(['auth','role:student'])->group(function (){
     Route::get('/student/blogs', [StudentController::class, 'blog'])->name('student.blog');
     Route::post('/student/blogs', [StudentController::class, 'store'])->name('student.blog.store');
         
+    //quizzes
+    Route::get('/student/quizzes', [QuizController::class, 'studentIndex'])->name('student.quizzes');
+    // Route to display the quiz to students
+    Route::get('/student/quizzes/{quiz}/start', [QuizController::class, 'takeQuiz'])->name('quizzes.start');
 
-    // Route::get('/assignments/{assignment}/download', [AssignmentController::class, 'downloadAssignment'])->name('assignments.download');
+    // Route to submit the quiz answers
+    Route::post('/student/quizzes/{quiz}/submit', [QuizController::class, 'submitQuiz'])->name('quizzes.submit');
+    Route::get('/quizzes/{quiz}/results', [QuizController::class, 'showQuizResults'])->name('quizzes.results');
 
 
     //online sessions

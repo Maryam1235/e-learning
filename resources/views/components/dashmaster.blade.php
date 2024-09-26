@@ -240,6 +240,13 @@
                                 </a>
                             </li><br>
                             <li class="nav-item">
+                                <a class="nav-link "
+                                    href="{{route('student.quizzes')}}">
+                                    <span class="nav-icon fa fa-file-text "></span>
+                                    <p>Quizzes</p>
+                                </a>
+                            </li><br>
+                            <li class="nav-item">
                                 <a class="nav-link"
                                     href="{{ route('student.onlineSessions') }}">
                                     <span class="nav-icon fa fa-chalkboard-teacher"></span>

@@ -32,6 +32,7 @@
                     <th>Student Name</th>
                     <th>Submitted At</th>
                     <th>Download Submission</th>
+                    <th>View</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -40,6 +41,7 @@
                         <td>{{ $submission->student->name }}</td>
                         <td>{{ $submission->submitted_at->format('d-m-Y H:i') }}</td>
                         <td><a href="{{ Storage::url($submission->file_path) }}" target="_blank">Download</a></td>
+                        <td><a href="{{ route('submission.show', $submission->id) }}">View</a></td>
                     </tr>
                     @endforeach
                     </tbody>
