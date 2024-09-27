@@ -17,36 +17,50 @@
         @csrf
         <div>
             <input type="text" name="title" placeholder="Title" required><br><br>
+             @error('title')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
-        {{-- <br> --}}
-        <div>
-            <select id="class_id" name="class_id" class="form-control " required>
-                <option value="" disabled selected>Select a Class</option>
-                @foreach ($classes as $class)
-                    <option value="{{ $class->id }}">{{ $class->name }}</option>
-                @endforeach
-            </select>
-        </div>
+         <div class="form-group">
+                <select name="class_id" id="class_id" class="form-control" required>
+                    <option value="">Select Class</option>
+                    @foreach($classes as $class)
+                         <option value="{{ $class->id }}">{{ $class->name }}</option>
+                    @endforeach
+                </select>
+                @error('class_id')
+                    <span class="text-danger">{{ $message }}</span>
+                 @enderror
+            </div>
         <br>
-        <div>
-            <select id="subject_id" name="subject_id" class="form-control " required>
-                <option value="" disabled selected>Select a Subject</option>
-                @foreach ($subjects as $subject)
-                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                @endforeach
+        <div class="form-group">
+             <select name="subject_id" id="subject_id" class="form-control" required>
+                <option value="">Select Subject</option>
             </select>
+             @error('subject_id')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <br>
         <div>
             <textarea name="description" placeholder="Description"></textarea><br>
+             @error('description')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <br>
         <div>
             <input type="file" name="file" accept=".pdf,.doc,.docx" required><br>
+             @error('file')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <br>
         <div>
             <input type="datetime-local" name="submission_deadline" required><br>
+             @error('submission_deadline')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 <br><br>
         <input type="submit" value="Create Assignment">
@@ -57,7 +71,30 @@
 </div>
 </div>
 </div>
+<script>
+    document.getElementById('class_id').addEventListener('change', function() {
+    const classId = this.value;
+    
+    fetch(`/get-subjects/${classId}`)
+        .then(response => response.json())
+        .then(data => {
+            const subjectSelect = document.getElementById('subject_id');
+            subjectSelect.innerHTML = '<option value="">Select Subject</option>'; 
+
+            
+            data.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = subject.name;
+                subjectSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching subjects:', error));
+});
+
+    </script>
 @endsection
+
 
 
 

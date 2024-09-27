@@ -31,6 +31,8 @@ Route::post('/login', [AuthController::class,'login'])->name('login');
 Route::get('/regForm', [AuthController::class,'regForm'])->name('regForm');
 Route::post('/register', [AuthController::class,'register'])->name('register');
 Route::post('/logout', [AuthController::class,'logout'])->name('logout');
+Route::post('/fetch-subjects', [AuthController::class, 'fetchSubjects'])->name('fetch.subjects');
+
 
 
 Route::middleware(['auth','role:admin'])->group(function (){
@@ -100,14 +102,15 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::delete('/teacher/deleteClass/{school_class}', [SchoolClassController::class, 'destroyClass']);
     Route::get('/teacher/viewClass/{school_class}',[SchoolClassController::class, 'viewClass'])->name('teacher.class');
     Route::get('/teacher/viewClass/{school_class}',[TeacherController::class, 'teacherViewClass'])->name('teacher.class');
-    Route::get('/teacher/viewClass/{school_class}/addSubject', [TeacherController::class, 'subjectForm'])->name('teacher.subjectForm');
-    Route::post('/teacher/viewClass/{school_class}/storeSubject', [TeacherController::class, 'addSubject'])->name('teacher.storeSubject');
-    Route::delete('/deleteSubject/{subject}', [SchoolClassController::class, 'destroySubject']);
+    // Route::get('/teacher/viewClass/{school_class}/addSubject', [TeacherController::class, 'subjectForm'])->name('teacher.subjectForm');
+    // Route::post('/teacher/viewClass/{school_class}/storeSubject', [TeacherController::class, 'addSubject'])->name('teacher.storeSubject');
+    // Route::delete('/deleteSubject/{subject}', [SchoolClassController::class, 'destroySubject']);
 
     Route::get('/class/{class}/subject/{subject}', [TeacherController::class, 'viewSubject'])->name('teacher.subjects');
     Route::get('/class/{class}/subject/{subject}/materials/upload', [TeacherController::class, 'materialForm'])->name('teacherMaterials.upload');
     Route::post('/class/{class}/subject/{subject}/materials/upload', [TeacherController::class, 'addMaterial'])->name('teacherMaterials.store');
     Route::get('/showMaterial/{material}',[TeacherController::class, 'showMaterial'])->name('material.show');
+    Route::delete('/deleteMaterial/{material}', [TeacherController::class, 'destroyMaterial'])->name('material.delete');
 
 
     //assignment
@@ -129,8 +132,6 @@ Route::middleware(['auth','role:teacher'])->group(function (){
 
     // teacher manage user
     Route::get('/teacher/user-management',[TeacherController::class, 'users'])->name('teacher.users');
-    Route::get('/teacher/addUser', [TeacherController::class, 'userForm']);
-    Route::post('/teacher/user/add', [TeacherController::class, 'addUser'])->name('teacher.addUser');
     Route::get('/teacher/viewUser/{user}',[TeacherController::class, 'viewUser']);
     Route::get('/teacher/editUser/{user}', [TeacherController::class, 'editForm']);
     Route::put('/teacher/editedUser/{user}', [TeacherController::class, 'updatedUser']);

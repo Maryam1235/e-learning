@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Subject;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +27,8 @@ class AuthController extends Controller
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
-        $user = Auth::user();  // Get the authenticated user
-        // dd($user); 
-        // Update the login timestamp for the authenticated user
+        $user = Auth::user(); 
+        // dd($user);
         $user->login_at = now();
         $user->save();
 
@@ -41,7 +41,6 @@ class AuthController extends Controller
         }
     }
 
-    // If authentication fails, redirect back with an error
     return redirect()->back()->withErrors([
         'email' => 'The provided credentials do not match our records.',
     ]);
@@ -51,6 +50,7 @@ class AuthController extends Controller
         $school_classes = SchoolClass::all();
         return view('components.register',[
             'school_classes' => $school_classes,
+            
         ]);
     }
     
@@ -61,9 +61,11 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' =>'required|string|confirmed|min:8',
+            'gender'=>'required|in:male,female,other',
             'school'=>'required|in:jitegemee,kawawa',
             'role' => 'required|in:teacher,student',
             'class_id' => 'required_if:role,student|exists:school_classes,id'
+
         ]);
 
 
@@ -71,6 +73,7 @@ class AuthController extends Controller
             'name' =>$request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'gender'=>$request->gender,
             'school' => $request->school,
             'role' => $request->role,
             'class_id'=>$request->class_id

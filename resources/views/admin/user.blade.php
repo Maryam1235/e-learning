@@ -1,6 +1,7 @@
 @extends('components.dashmaster')
 
 @section('body')
+<div class="content-wrapper custom-dashboard">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">User Details</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -21,6 +22,14 @@
                     <h2>Role :</h2>
                     <h4>{{$user->role}}</h4>
                 </div>
+                <div class="row">
+                    <h2>Gender :</h2>
+                    <h4>{{$user->gender}}</h4>
+                </div>
+                 <div class="row">
+                    <h2>School :</h2>
+                    <h4>{{$user->school}}</h4>
+                </div>
                 <div >
                 <button type="submit" class="btn btn-success btn-primary mt-3 text-center px-3" onclick="window.location.href='/editUser/{{$user->id}}' ">
                     Edit User 
@@ -37,4 +46,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

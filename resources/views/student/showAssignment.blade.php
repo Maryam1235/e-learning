@@ -14,6 +14,7 @@
             <p><strong>Deadline:</strong> {{ $assignment->submission_deadline->format('d-m-Y H:i') }}</p>
             <p><strong>Uploaded By:</strong> {{ $assignment->teacher->name }}</p>
             <a href="{{ route('student.assignment.open', $assignment->id) }}" class="btn btn-primary">View Assignment</a>
+            <a href="{{ route('student.assignments') }}" class="btn btn-primary">Go back</a>
         </div>
         
     </div>

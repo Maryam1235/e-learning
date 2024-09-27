@@ -51,10 +51,12 @@ class AdminController extends Controller
     }
 
     public function addUser(Request $request) {
+        // dd($request->all());
         $inputData = $request ->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' =>'required|string|confirmed|min:8',
+            'gender'=>'required|in:male,female,other',
             'school'=>'required|in:jitegemee,kawawa',
             'role' => 'required|in:teacher,student',
             'class_id' => 'required_if:role,student|exists:school_classes,id'
@@ -86,6 +88,7 @@ class AdminController extends Controller
         $formData = $request ->validate([
             'name' => 'required',
             'email' => 'required',
+            'gender'=>'required',
             'school'=>'required',
             'role' => 'required',
             'class'=>'required',

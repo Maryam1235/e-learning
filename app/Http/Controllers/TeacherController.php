@@ -161,6 +161,12 @@ public function showMaterial(Material $material)
     return response()->file(Storage::path($material->file_path));
 }
 
+public function destroyMaterial(Material $material)
+{
+    $material->delete();
+    return redirect()->back();;
+}
+
 
 
 //blog 

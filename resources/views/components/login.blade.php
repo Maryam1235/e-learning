@@ -13,9 +13,20 @@
         <h1>Login as {{ $role }}</h1>
         <form method="POST" action="{{ route('login') }}">
         @csrf
-        
-            <input type="email" name="email" placeholder="Email" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
+        <div>
+        <input type="email" name="email" placeholder="Email" required><br>
+         @error('email')
+                <span class="text-danger">{{ $message }}</span>
+              @enderror
+        </div>
+        <div>
+        <input type="password" name="password" placeholder="Password" required><br>
+         @error('password')
+                <span class="text-danger">{{ $message }}</span>
+              @enderror
+        </div>
+            
+            
             <input type="checkbox" id="remember">
             <label for="remember">
               Remember Me

@@ -12,7 +12,6 @@
    
     
     <section class="containter-fluid my-5">
-        <div class="row g-2">
 
             <div class="welcome-message">
                 <h1>Welcome, {{ $student->name }}!</h1>
@@ -20,7 +19,7 @@
                 <h2>Your Class: {{ $student->schoolClass->name }}</h2>
             </div>
 
-        </div>
+        
     </section>
 </div>
 @endsection

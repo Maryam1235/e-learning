@@ -616,12 +616,12 @@ h1{
 }
 
 .sub{
-    background-color: rgb(96, 224, 198);
+    /* background-color: rgb(96, 224, 198); */
     /* background-image: url('../../public/images/bg4.jpg'); */
-    background-image: url('../../public/images/sub.jpg');
-    background-repeat: no-repeat;
+    /* background-image: url('../../public/images/sub.jpg'); */
+    /* background-repeat: no-repeat;
     background-size: cover;
-    background-position: fixed;
+    background-position: fixed; */
     padding: 90px;
     /* border: 2px solid yellow; */
     display: flex;
@@ -686,10 +686,10 @@ h1{
 }
 
 .to_do_list_custom li {
-    display: flex; /* Use flexbox to align items */
-    align-items: center; /* Center vertically */
-    justify-content: space-between; /* Space out the items */
-    padding: 10px; /* Add some padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 10px; 
 }
 
 .text {
@@ -933,12 +933,9 @@ h1{
         
     }
     .chat-app .people-list {
-        /* height: 465px; */
         width: 100%;
         overflow-x: auto;
         background: #fff;
-        /*left: -400px;
-        display: none*/
         position: relative;
         boader-bottom: 2px dashed #d1d1d1;
     }

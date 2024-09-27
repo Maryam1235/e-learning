@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
         'school',
         'role',
         'class_id',
@@ -40,7 +41,7 @@ class User extends Authenticatable
         if ($this->login_at && $this->logout_at) {
             $loginAt = Carbon::parse($this->login_at);
             $logoutAt = Carbon::parse($this->logout_at);
-            return $logoutAt->diffForHumans($loginAt, true); // Returns a human-readable format like "2 hours, 30 minutes"
+            return $logoutAt->diffForHumans($loginAt, true);
         }
     
         return null;
@@ -54,7 +55,7 @@ public function schoolClass()
 
 public function classes()
 {
-    return $this->belongsToMany(SchoolClass::class, 'teacher_subject_class', 'teacher_id', 'school_class_id')
+    return $this->belongsToMany(SchoolClass::class,  'teacher_subject_class', 'teacher_id', 'school_class_id')
                 ->withPivot('subject_id');
 }
 

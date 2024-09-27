@@ -2,8 +2,11 @@
 
 @section('body')
 <div class="content-wrapper custom-student">
-<div class="background"></div>
+
+<a href="{{ route('student.assignments')}}" class="btn btn-primary link">Go Back</a>
 <div class="sub"> 
+
+
     <div class="form-container">
         <h1>{{ $assignment->title }}</h1><br><br>
         <p>{{ $assignment->description }}</p><br><br>
@@ -22,7 +25,7 @@
         @endif
 
         @if($assignment->submission_deadline > now())
-            <form action="{{ route('student.assignments.submit', $assignment->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('student.assignments.submit', $assignment->id) }}" id="submission_form" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" accept=".pdf,.doc,.docx" required><br><br>
                 <input type="submit"  value="Submit Assignment">  
@@ -37,4 +40,31 @@
     </p>
 </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+    $('#submission_form').submit(function(event) {
+        event.preventDefault();
+        console.log('Form submission prevented');
+        var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log('AJAX submission successful');
+                console.log(data);
+                $('#submission_form').append('<div class="alert alert-success">Assignment submitted successfully!</div>');
+            },
+            error: function(xhr, status, error) {
+                console.log('AJAX submission error');
+                console.log(xhr.responseText);
+                $('#submission_form').append('<div class="alert alert-danger">Error uploading assignment. Please try again.</div>');
+            }
+        });
+    });
+});
+</script>
 @endsection
