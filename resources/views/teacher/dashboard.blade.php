@@ -10,12 +10,12 @@
           <div class="col-sm-6">
             <h1 class="m-0">Dashboard</h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
+          {{-- <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Dashboard v1</li>
             </ol>
-          </div><!-- /.col -->
+          </div> --}}
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -357,13 +357,20 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+ 
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; <span id="currentYear"></span> <a href="https://sumajkt.go.tz">Visit Our Website</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      {{-- <b>Version</b> 3.2.0 --}}
     </div>
-  </footer>
+</footer>
+
+<script>
+    // Get the current year and display it in the footer
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+</script>
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

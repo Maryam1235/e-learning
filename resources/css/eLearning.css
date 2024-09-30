@@ -312,15 +312,13 @@ h1{
 /* -------------------------------------
          login-css
 ------------------------------------- */
-#log{
+/* #log{
     background-color: rgb(96, 224, 198);
-    /* background-image: url('../../public/images/bg4.jpg'); */
     background-image: url('../../public/images/IMG13.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: fixed;
     padding: 90px;
-    /* border: 2px solid yellow; */
     display: flex;
     justify-content: flex-end;
     padding-top: 120px;
@@ -333,14 +331,7 @@ h1{
     margin-top: 30vh;
 }
 #Alog{
-    /* background-color: rgb(96, 224, 198); */
-    /* background-image: url('../../public/images/bg4.jpg'); */
-    /* background-image: url('../../public/images/IMG13.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: fixed; */
     padding: 90px;
-    /* border: 2px solid yellow; */
     display: flex;
     justify-content: flex-end;
     padding-top: 120px;
@@ -361,7 +352,6 @@ h1{
     width: 300px;
 }
 
-/* Form Title */
 .login-container h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -369,7 +359,6 @@ h1{
     color: #333;
 }
 
-/* Form Fields */
 .login-container input[type="email"],
 .login-container input[type="password"] {
     width: 100%;
@@ -382,7 +371,6 @@ h1{
     color: #333;
 }
 
-/* Form Submit Button */
 .login-container input[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -399,7 +387,6 @@ h1{
     background-color: #0056b3;
 }
 
-/* Add Focus Effect on Inputs */
 .login-container input[type="email"]:focus,
 .login-container input[type="password"]:focus {
     border-color: #80bdff;
@@ -407,7 +394,6 @@ h1{
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-/* Link Styles */
 .login-container a {
     color: #007bff;
     text-decoration: none;
@@ -417,15 +403,94 @@ h1{
 }
 
 .login-container a:hover {
-    /* text-decoration: underline; */
+    text-decoration: none;
+} */
+ /* For the background container */
+#log {
+    background-image: url('../../public/images/IMG13.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed; 
+    background-position: center center;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 400px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container input[type="email"], 
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.login-container input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.login-container label {
+    font-size: 14px;
+}
+
+.login-container a {
+    color: #007bff;
     text-decoration: none;
 }
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+.text-danger {
+    color: red;
+    font-size: 12px;
+}
+
+.toggle-password i {
+    font-size: 1.2rem;
+    color: #000; 
+}
+
+.toggle-password i:hover {
+    color: #007bff; 
+}
+
+
 
 /* -------------------------------------
          register-css
 ------------------------------------- */
-/* Container for Form */
-.form-container {
+
+/* .form-container {
     background-color: #ffffff;
     padding: 20px 30px;
     border-radius: 8px;
@@ -433,8 +498,6 @@ h1{
     width: 300px;
 }
 
-
-/* Form Title */
 .form-container h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -442,7 +505,6 @@ h1{
     color: #333;
 }
 
-/* Form Fields */
 .form-container input[type="text"],
 .form-container input[type="email"],
 .form-container input[type="password"],
@@ -457,7 +519,6 @@ h1{
     color: #333;
 }
 
-/* Form Submit Button */
 .form-container input[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -474,7 +535,6 @@ h1{
     background-color: #218838;
 }
 
-/* Add Focus Effect on Inputs */
 .form-container input[type="text"]:focus,
 .form-container input[type="email"]:focus,
 .form-container input[type="password"]:focus,
@@ -484,7 +544,6 @@ h1{
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-/* Optional: Link styles */
 .form-container a {
     color: #007bff;
     text-decoration: none;
@@ -495,7 +554,89 @@ h1{
 
 .form-container a:hover {
     text-decoration: underline;
+} */
+
+  /* Styling for the registration form */
+  /* #log {
+    background-color: rgb(96, 224, 198);
+    background-image: url('../../public/images/IMG13.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    padding: 90px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 120px;
+} */
+
+.form-container {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    overflow: auto;
 }
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"],
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.form-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-container a:hover {
+    text-decoration: underline;
+}
+
+/* Styling the eye icon */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 12px; /* Adjust this for vertical alignment */
+}
+
+.toggle-password i {
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.toggle-password i:hover {
+    color: #007bff;
+} 
+
+
+
 
 
 /* footer */

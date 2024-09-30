@@ -28,6 +28,12 @@ class AuthController extends Controller
 
     if (Auth::attempt($credentials)) {
         $user = Auth::user(); 
+
+          // Check if the account is inactive
+          if ($user->status === 'inactive') {
+            Auth::logout();
+            return redirect()->back()->withErrors(['email' => 'Your account is inactive. Please contact the admin.']);
+        }
         // dd($user);
         $user->login_at = now();
         $user->save();
@@ -76,11 +82,14 @@ class AuthController extends Controller
             'gender'=>$request->gender,
             'school' => $request->school,
             'role' => $request->role,
-            'class_id'=>$request->class_id
+            'class_id'=>$request->class_id,
+
+            'status' => 'inactive' 
         ]);
 
 
-        return redirect()->route('loginForm')->with('success', 'Registration successful. Please login.');
+        //return redirect()->route('loginForm')->with('success', 'Registration successful. Please login.');
+        return redirect()->route('loginForm')->with('success', 'Registration successful. Please wait for admin approval.');
     
     }
 
@@ -94,6 +103,67 @@ class AuthController extends Controller
     }
 
 
+        // status
+        public function updateStatus(Request $request, User $user)
+        {
+            $request->validate([
+                'status' => 'required|in:active,inactive',
+            ]);
+
+            $user->status = $request->status;
+            $user->save();
+
+            return redirect()->back()->with('status', 'User status updated successfully.');
+        }
+
+        // user change password
+        public function teacherChangePasswordForm()
+        {
+            return view('teacher.change_password'); // Ensure this view exists
+        }
+        public function showChangePasswordForm()
+        {
+            return view('components.change_password'); // Ensure this view exists
+        }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|confirmed|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('student.dashboard')->with('success', 'Password changed successfully.');
+    }
+
+    
+    public function teacherChangePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|confirmed|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('teacher.dashboard')->with('success', 'Password changed successfully.');
+    }
 
     
 }

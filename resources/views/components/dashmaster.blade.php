@@ -163,7 +163,14 @@
                                         <span class="nav-icon fa ion-clipboard"></span>
                                         <p>Quizzes</p>
                                     </a>
-                                </li>
+                                </li><br>
+                                <li class="nav-item">
+                                <a class="nav-link "
+                                    href="{{route('teacher.change.password')}}">
+                                    <span class="nav-icon fa fa-key "></span>
+                                    <p>Change Password</p>
+                                </a>
+                                </li><br>
                                 <li class="nav-item">
                                     <a class="nav-link "
                                         href="{{ route('teacher.onlineSessions') }}">
@@ -244,6 +251,13 @@
                                     href="{{route('student.quizzes')}}">
                                     <span class="nav-icon fa fa-file-text "></span>
                                     <p>Quizzes</p>
+                                </a>
+                            </li><br>
+                            <li class="nav-item">
+                                <a class="nav-link "
+                                    href="{{route('change.password')}}">
+                                    <span class="nav-icon fa fa-key "></span>
+                                    <p>Change Password</p>
                                 </a>
                             </li><br>
                             <li class="nav-item">

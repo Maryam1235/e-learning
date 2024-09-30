@@ -36,6 +36,8 @@
                     <th>School</th>
                     <th>Class</th>
                     <th>Role</th>
+                    {{-- status --}}
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                   </thead>
@@ -47,6 +49,14 @@
                     <td>{{ $user->school }}</td>
                     <td>{{ optional($user->schoolClass)->name ?? 'No class assigned' }}</td>
                     <td>{{ $user->role }}</td>
+                      {{-- status --}}
+                     <td>
+                        @if ($user->status == 'active')
+                          <span class="badge badge-success">Active</span>
+                        @else
+                          <span class="badge badge-secondary">Inactive</span>
+                        @endif
+                      </td>
                     <td>
                       <a href="/viewUser/{{$user->id}}" role="button" class="btn btn-info btn-sm" ><i class="text-success fa fa-eye"></i></a>
                       <a href="/editUser/{{$user->id}}" role="button" class="btn btn-warning btn-sm"><i class="text-primary fa fa-edit"></i></a>
@@ -59,6 +69,30 @@
                               <span class="d-none d-md-inline-block"> </span></i>
                           </button>
                         </form>
+
+
+                         <!-- Toggle Activation/Deactivation -->
+                        <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST" style="display:inline;">
+                         
+                              @csrf
+                              <input type="hidden" name="_method" value="PATCH"> <!-- Hidden field for PATCH -->
+                              
+                              @if($user->status == 'inactive')
+                                  <button type="submit" name="status" value="active" class="btn btn-success btn-sm" onclick="return confirm('Activate this user?')">
+                                      Activate
+                                  </button>
+                              @else
+                                  <button type="submit" name="status" value="inactive" class="btn btn-danger btn-sm" onclick="return confirm('Deactivate this user?')">
+                                      Deactivate
+                                  </button>
+                              @endif
+                        </form>
+
+                        {{-- <td> --}}
+                            <!-- Other action buttons -->
+                            <a href="{{ route('admin.resetPassword', $user->id) }}" class="btn btn-warning btn-sm">Reset Password</a>
+                        {{-- </td> --}}
+
                      
                     </td>
                   </tr>

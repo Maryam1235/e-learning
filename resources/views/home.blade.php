@@ -129,13 +129,36 @@
             
         </div>
     </div>
-     <div class="ml-6">
+     {{-- <div class="ml-6">
         <form action="{{ route('select.role') }}" method="POST" style="display: inline-block;">
             @csrf
-            <button type="submit" name="role" value="teacher" class="button" style="margin: 20px">I am a Teacher</button>
-            <button type="submit" name="role" value="student" class="button">I am a Student</button>
+            <button type="submit" name="role" value="teacher" class="button" style="margin: 20px">Login In</button>
+            <button type="submit" name="role" value="student" class="button">Register</button>
         </form>
-    </div>
+    </div> --}}
+
+    <div class="ml-6">
+    <form id="roleForm" action="{{ route('loginForm') }}" method="GET" style="display: inline-block;">
+        @csrf
+        <button type="button" onclick="setFormAction('login')" class="button" style="margin: 20px">Login</button>
+        <button type="button" onclick="setFormAction('register')" class="button">Register</button>
+    </form>
+</div>
+
+<script>
+    function setFormAction(action) {
+        const form = document.getElementById('roleForm');
+
+        if (action === 'login') {
+            form.action = "{{ route('loginForm') }}";  // Route to login form
+        } else if (action === 'register') {
+            form.action = "{{ route('regForm') }}";  // Route to registration form
+        }
+
+        form.submit(); // Submit the form
+    }
+</script>
+
 </div>
    
 </main>

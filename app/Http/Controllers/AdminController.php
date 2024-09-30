@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -104,6 +105,38 @@ class AdminController extends Controller
         $user->delete();
         return redirect()->back();
     }
+
+    // update status
+
+    public function updateUserStatus(Request $request, User $user)
+    {
+        $user->status = $request->status;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User status updated successfully.');
+    }
+
+
+    // reset password
+    public function resetPassword($id)
+    {
+        $user = User::findOrFail($id);
+        return view('components.reset_password', compact('user'));
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required|string|confirmed|min:8',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('admin.users')->with('success', 'Password reset successfully.');
+    }
+
 
 
 

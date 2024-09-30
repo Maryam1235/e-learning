@@ -45,6 +45,19 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::put('/editedUser/{user}', [AdminController::class, 'updatedUser']);
     Route::delete('/deleteUser/{user}', [AdminController::class, 'destroy']);
 
+    // route status
+    Route::post('/admin/users/{user}/status', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateStatus');
+    Route::patch('/admin/users/{user}/status', [AuthController::class, 'updateStatus'])->name('admin.updateStatus');
+
+    // reset password
+    Route::get('/admin/reset-password/{user}', [AdminController::class, 'resetPassword'])->name('admin.resetPassword');
+    Route::post('/admin/reset-password/{user}', [AdminController::class, 'updatePassword'])->name('admin.updatePassword');
+
+   
+
+
+
+
     Route::get('/admin/classes',[SchoolClassController::class, 'classes'])->name('admin.classes');
     Route::get('/addClass', [SchoolClassController::class, 'classForm']);
     Route::post('/storeClass', [SchoolClassController::class, 'addClass'])->name('storeClass');
@@ -95,6 +108,9 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
 
 Route::middleware(['auth','role:teacher'])->group(function (){
+    Route::get('/teacher/change-password', [AuthController::class, 'teacherChangePasswordForm'])->name('teacher.change.password');
+    Route::post('/teacher/change-password', [AuthController::class, 'teacherChangePassword'])->name('teacher.change.password.submit');
+ 
     Route::get('/teacher/dashboard',[TeacherController::class, 'index'])->name('teacher.dashboard');
     Route::get('/teacher/classes',[TeacherController::class, 'teacherClasses'])->name('teacher.classes');
     Route::get('/teacher/addClass', [TeacherController::class, 'teacherClassForm']);
@@ -163,6 +179,9 @@ Route::middleware(['auth','role:teacher'])->group(function (){
 });
 
 Route::middleware(['auth','role:student'])->group(function (){
+    Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('change.password');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change.password.submit');
+ 
     Route::get('/student/dashboard',[StudentController::class, 'index'])->name('student.dashboard');
     Route::get('/student/class',[StudentController::class, 'subjects'])->name('student.class');
     Route::get('/student/class/{subject}/materials', [StudentController::class, 'showMaterials'])->name('student.subject.materials');
@@ -205,6 +224,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/to-do-list', [ToDoListController::class, 'store'])->name('to-do-list.store');
     Route::patch('/to-do-list/{id}', [ToDoListController::class, 'update'])->name('to-do-list.update');
     Route::delete('/to-do-list/{id}', [ToDoListController::class, 'destroy'])->name('to-do-list.destroy');
+
+    
+    
+    
 });
 
 
