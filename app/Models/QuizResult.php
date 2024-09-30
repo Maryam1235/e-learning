@@ -9,7 +9,6 @@ class QuizResult extends Model
 {
     use HasFactory;
 
-    // Define the fillable attributes for mass assignment
     protected $fillable = [
         'quiz_id',     
         'student_id',      
@@ -35,6 +34,11 @@ class QuizResult extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function student()
+{
+    return $this->belongsTo(User::class, 'student_id');
+}
 }
 
 

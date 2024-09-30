@@ -163,6 +163,7 @@
                                         <span class="nav-icon fa ion-clipboard"></span>
                                         <p>Quizzes</p>
                                     </a>
+
                                 </li><br>
                                 <li class="nav-item">
                                 <a class="nav-link "
@@ -171,6 +172,16 @@
                                     <p>Change Password</p>
                                 </a>
                                 </li><br>
+
+                                </li>
+                                {{-- <li class="nav-item">
+                                    <a class="nav-link "
+                                        href="/teacher/quizzes/{quiz}/results">
+                                        <span class="nav-icon fa ion-clipboard"></span>
+                                        <p>Quiz  Results</p>
+                                    </a>
+                                </li> --}}
+
                                 <li class="nav-item">
                                     <a class="nav-link "
                                         href="{{ route('teacher.onlineSessions') }}">

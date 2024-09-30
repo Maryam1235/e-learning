@@ -15,7 +15,9 @@ class Quiz extends Model
         'subject_id', 
         'start_time', 
         'end_time', 
-        'duration'];
+        'duration',
+        'quiz_file',
+    ];
 
         protected $casts = [
             'start_time' => 'datetime',

@@ -7,17 +7,15 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h1>Edit Quiz</h1>
+                        <h1>Upload New Quiz</h1>
                     </div>
                     <div class="card-body border p-4 rounded">
-                        <form action="{{ route('admin.quizzes.update', $quiz->id) }}" method="POST">
+                        <form action="{{ route('admin.quizzes.upload.post') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
-
                             <!-- Quiz Title -->
                             <div class="form-group">
                                 <label for="title">Quiz Title</label>
-                                <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $quiz->title) }}" required>
+                                <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -26,18 +24,21 @@
                             <!-- Quiz Description -->
                             <div class="form-group">
                                 <label for="description">Quiz Description</label>
-                                <input type="text" name="description" id="description" class="form-control" value="{{ old('description', $quiz->description) }}" required>
+                                <input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" required>
                                 @error('description')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <!-- Select Class -->
-                            <div class="form-group">
+                           
+
+                              <!-- Select Class -->
+                              <div class="form-group">
                                 <label for="class_id">Select Class</label>
                                 <select name="class_id" id="class_id" class="form-control" required>
+                                    <option value="">Select Class</option>
                                     @foreach($classes as $class)
-                                        <option value="{{ $class->id }}" {{ old('class_id', $quiz->class_id) == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
+                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('class_id')
@@ -45,13 +46,11 @@
                                 @enderror
                             </div>
 
-                            <!-- Select Subject -->
+                            <!-- Subject Dropdown -->
                             <div class="form-group">
                                 <label for="subject_id">Select Subject</label>
                                 <select name="subject_id" id="subject_id" class="form-control" required>
-                                    @foreach($subjects as $subject)
-                                    <option value="{{ $subject->id }}" {{ old('subject_id', $selectedSubjectId) == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
-                                    @endforeach
+                                    <option value="">Select Subject</option>
                                 </select>
                                 @error('subject_id')
                                     <span class="text-danger">{{ $message }}</span>
@@ -60,7 +59,7 @@
                             <!-- Start Time -->
                             <div class="form-group">
                                 <label for="start_time">Start Time</label>
-                                <input type="datetime-local" name="start_time" id="start_time" class="form-control" value="{{ old('start_time', $quiz->start_time->format('Y-m-d\TH:i')) }}" required>
+                                <input type="datetime-local" name="start_time" id="start_time" class="form-control" value="{{ old('start_time') }}" required>
                                 @error('start_time')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -69,7 +68,7 @@
                             <!-- End Time -->
                             <div class="form-group">
                                 <label for="end_time">End Time</label>
-                                <input type="datetime-local" name="end_time" id="end_time" class="form-control" value="{{ old('end_time', $quiz->end_time->format('Y-m-d\TH:i')) }}" required>
+                                <input type="datetime-local" name="end_time" id="end_time" class="form-control" value="{{ old('end_time') }}" required>
                                 @error('end_time')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -78,37 +77,18 @@
                             <!-- Duration -->
                             <div class="form-group">
                                 <label for="duration">Quiz Duration (in minutes)</label>
-                                <input type="number" name="duration" id="duration" class="form-control" value="{{ old('duration', $quiz->duration) }}" required>
+                                <input type="number" name="duration" id="duration" class="form-control" value="{{ old('duration') }}" required>
                                 @error('duration')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <!-- Questions Section -->
-                            <div id="questions-container">
-                                @foreach($quiz->questions as $index => $question)
-                                    <div class="form-group">
-                                        <label for="question">Question {{ $index + 1 }}</label>
-                                        <input type="text" name="questions[{{ $index }}][question_text]" class="form-control" value="{{ old('questions.' . $index . '.question_text', $question->question_text) }}" required>
-                                        @error("questions.{$index}.question_text")
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-
-                                        <input type="text" name="questions[{{ $index }}][option1]" class="form-control mt-2" value="{{ old('questions.' . $index . '.option1', $question->option1) }}" placeholder="Option 1" required>
-                                        <input type="text" name="questions[{{ $index }}][option2]" class="form-control mt-2" value="{{ old('questions.' . $index . '.option2', $question->option2) }}" placeholder="Option 2" required>
-                                        <input type="text" name="questions[{{ $index }}][option3]" class="form-control mt-2" value="{{ old('questions.' . $index . '.option3', $question->option3) }}" placeholder="Option 3" required>
-                                        <input type="text" name="questions[{{ $index }}][option4]" class="form-control mt-2" value="{{ old('questions.' . $index . '.option4', $question->option4) }}" placeholder="Option 4" required>
-
-                                        <input type="text" name="questions[{{ $index }}][correct_option]" class="form-control mt-2" value="{{ old('questions.' . $index . '.correct_option', $question->correct_option) }}" placeholder="Correct Answer (e.g., option1)" required>
-                                    </div>
-                                @endforeach
+                            <div class="form-group">
+                                <label for="quiz_file">Quiz File:</label>
+                                <input type="file" class="form-control" id="quiz_file" name="quiz_file" required>
                             </div>
-
-                            <!-- Add another question button -->
-                            <button type="button" class="btn btn-primary mt-3" id="add-question">Add Another Question</button>
-
                             <!-- Submit Quiz -->
-                            <button type="submit" class="btn btn-success mt-3">Update Quiz</button>
+                            <button type="submit" class="btn btn-success mt-3">Create Quiz</button>
                         </form>
                     </div>
                 </div>
@@ -119,7 +99,7 @@
 
 <!-- JavaScript to dynamically add more questions -->
 <script>
-    let questionCount = {{ $quiz->questions->count() }};
+    let questionCount = 1;
     document.getElementById('add-question').addEventListener('click', function () {
         const container = document.getElementById('questions-container');
         const newQuestion = `
@@ -137,8 +117,6 @@
         questionCount++;
     });
 </script>
-
-
 <script>
     document.getElementById('class_id').addEventListener('change', function() {
     const classId = this.value;
@@ -162,5 +140,6 @@
 });
 
     </script>
-
+    
 @endsection
+

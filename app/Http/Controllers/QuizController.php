@@ -9,6 +9,9 @@ use App\Models\UserAnswer;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Imports\QuizResultsImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class QuizController extends Controller
 {
@@ -159,16 +162,18 @@ public function editQuiz(Quiz $quiz)
 {
     $quiz->load('questions');
     $classes = SchoolClass::all();   
-    $subjects = Subject::all();      
-    return view('teacher.quiz.edit', compact('quiz', 'classes', 'subjects'));
+    $subjects = Subject::all();  
+    $selectedSubjectId = $quiz->subject_id;    
+    return view('teacher.quiz.edit', compact('quiz', 'classes', 'subjects','selectedSubjectId'));
 }
 
 public function adminEditQuiz(Quiz $quiz)
 {
     $quiz->load('questions');
     $classes = SchoolClass::all();   
-    $subjects = Subject::all();      
-    return view('admin.quiz.edit', compact('quiz', 'classes', 'subjects'));
+    $subjects = Subject::all();  
+    $selectedSubjectId = $quiz->subject_id;      
+    return view('admin.quiz.edit', compact('quiz', 'classes', 'subjects', 'selectedSubjectId'));
 }
 
 public function updateQuiz(Request $request, Quiz $quiz)
@@ -189,7 +194,6 @@ public function updateQuiz(Request $request, Quiz $quiz)
         'questions.*.correct_option' => 'required|string|in:option1,option2,option3,option4',
     ]);
 
-    // Update the quiz
     $quiz->update([
         'title' => $request->input('title'),
         'description' => $request->input('description'),
@@ -200,32 +204,21 @@ public function updateQuiz(Request $request, Quiz $quiz)
         'duration' => $request->input('duration'),
     ]);
 
-    // Update or create questions
-    foreach ($request->input('questions') as $key => $questionData) {
-        if (isset($questionData['id'])) {
-            // Update existing question
-            $quiz->questions()->where('id', $questionData['id'])->update([
-                'question_text' => $questionData['question_text'],
-                'option1' => $questionData['option1'],
-                'option2' => $questionData['option2'],
-                'option3' => $questionData['option3'],
-                'option4' => $questionData['option4'],
-                'correct_option' => $questionData['correct_option'],
-            ]);
-        } else {
-            // Create new question
-            $quiz->questions()->create([
-                'question_text' => $questionData['question_text'],
-                'option1' => $questionData['option1'],
-                'option2' => $questionData['option2'],
-                'option3' => $questionData['option3'],
-                'option4' => $questionData['option4'],
-                'correct_option' => $questionData['correct_option'],
-            ]);
-        }
+   
+    $quiz->questions()->delete();
+
+    foreach ($request->input('questions') as $questionData) {
+        $quiz->questions()->create([
+            'question_text' => $questionData['question_text'],
+            'option1' => $questionData['option1'],
+            'option2' => $questionData['option2'],
+            'option3' => $questionData['option3'],
+            'option4' => $questionData['option4'],
+            'correct_option' => $questionData['correct_option'],
+        ]);
     }
 
-    return redirect()->route('admin.quizzes.index')->with('success', 'Quiz updated successfully.');
+    return redirect()->route('quizzes.index')->with('success', 'Quiz updated successfully.');
 }
 
 public function adminUpdateQuiz(Request $request, Quiz $quiz)
@@ -256,6 +249,7 @@ public function adminUpdateQuiz(Request $request, Quiz $quiz)
         'end_time' => $request->input('end_time'),
         'duration' => $request->input('duration'),
     ]);
+    $quiz->questions()->delete();
 
     // Update or create questions
     foreach ($request->input('questions') as $key => $questionData) {
@@ -311,53 +305,69 @@ public function startQuiz(Quiz $quiz)
 
 
 
-    public function takeQuiz(Quiz $quiz)
-    {
-        $questions = $quiz->questions;
-        return view('student.quiz.start', compact('quiz','questions'));
+public function takeQuiz(Quiz $quiz)
+{
+    if (now()->greaterThan($quiz->end_time)) {
+
+        return redirect()->back()->with('error', 'The deadline for this quiz has passed. You cannot start it.');
     }
 
-    public function submitQuiz(Request $request, Quiz $quiz)
-    {
-        // Retrieve the student's ID (assuming the student is authenticated)
-        $studentId = auth()->user()->id;
+    $questions = $quiz->questions;
 
-        // Retrieve the submitted answers
-        $submittedAnswers = $request->input('answers');
+    return view('student.quiz.start', compact('quiz', 'questions'));
+}
 
-        // Initialize the score and total number of questions
-        $score = 0;
-        $totalQuestions = $quiz->questions->count();
+    
 
-        // Iterate through the quiz questions
-        foreach ($quiz->questions as $question) {
-            // Check if the student submitted an answer for this question
-            if (isset($submittedAnswers[$question->id])) {
-                $submittedAnswer = $submittedAnswers[$question->id];
+public function submitQuiz(Request $request, Quiz $quiz)
+{
+    $studentId = auth()->user()->id;
+    $submittedAnswers = $request->input('answers'); // Array of question_id => selected_option
 
-                // Check if the submitted answer matches the correct answer
-                if ($submittedAnswer == $question->correct_answer) {
-                    $score++; // Increase the score for a correct answer
-                }
+    $score = 0;
+    $totalQuestions = $quiz->questions->count();
+
+    foreach ($quiz->questions as $question) {
+        if (isset($submittedAnswers[$question->id])) {
+            $submittedAnswer = $submittedAnswers[$question->id];
+
+            // Store student's answer in UserAnswer table
+            UserAnswer::create([
+                'user_id' => $studentId,
+                'quiz_id' => $quiz->id,
+                'question_id' => $question->id,
+                'selected_option' => $submittedAnswer,
+            ]);
+
+         
+            if (strtolower($submittedAnswer) == strtolower($question->correct_option)) {
+                $score++;
             }
         }
-
-        // Calculate the percentage score
-        $percentageScore = ($score / $totalQuestions) * 100;
-
-        // Save the quiz result for the student in the database
-        $quizResult = new QuizResult();
-        $quizResult->quiz_id = $quiz->id;
-        $quizResult->student_id = $studentId;
-        $quizResult->score = $score;
-        $quizResult->total_questions = $totalQuestions;
-        $quizResult->percentage = $percentageScore;
-        $quizResult->save();
-
-        // Redirect to a results page or back to the quizzes page with a success message
-        return redirect()->route('quizzes.results', $quiz->id)
-                        ->with('success', 'Quiz submitted successfully! Your score is ' . $percentageScore . '%.');
     }
+
+    // Calculate percentage score
+    $percentageScore = ($score / $totalQuestions) * 100;
+
+    // Save the result in QuizResult table
+    QuizResult::updateOrCreate(
+        [
+            'quiz_id' => $quiz->id,
+            'student_id' => $studentId
+        ],
+        [
+            'score' => $score,
+            'total_questions' => $totalQuestions,
+            'percentage' => $percentageScore,
+        ]
+    );
+
+    // Redirect to results page with success message
+    return redirect()->route('quizzes.results', $quiz->id)
+                     ->with('success', 'Quiz submitted successfully! Your score is ' . round($percentageScore, 2) . '%.');
+}
+
+
     public function showQuizResults(Quiz $quiz)
     {
         // Retrieve the quiz result for the logged-in student
@@ -365,30 +375,167 @@ public function startQuiz(Quiz $quiz)
         $quizResult = QuizResult::where('quiz_id', $quiz->id)
                                 ->where('student_id', $studentId)
                                 ->firstOrFail();
-
+    
         // Pass the result to the view
         return view('student.quiz.results', compact('quizResult'));
     }
+    
+
+    public function viewQuizResults(Quiz $quiz)
+    {
+        $quizResults = QuizResult::where('quiz_id', $quiz->id)
+        ->distinct('student_id')
+        ->get();
+    
+        return view('teacher.quiz.results', compact('quiz', 'quizResults'));
+    }
+
+    public function adminViewQuizResults(Quiz $quiz)
+    {
+        $quizResults = QuizResult::where('quiz_id', $quiz->id)
+        ->distinct('student_id')
+        ->get();
+    
+        return view('admin.quiz.results', compact('quiz', 'quizResults'));
+    }
+
+    public function uploadQuizResults(Request $request, Quiz $quiz)
+    {
+        $excel = Excel::load($request->file('results'));
+    
+        $data = $excel->toArray();
+    
+        foreach ($data as $row) {
+            $studentName = $row['Student Name'];
+            $score = $row['Score'];
+    
+            QuizResult::create([
+                'student_name' => $studentName,
+                'score' => $score,
+                'quiz_id' => $quiz->id,
+            ]);
+        }
+    
+        return redirect()->route('quizzes.results', $quiz->id);
+    }
 
 
+    public function adminUploadQuizResults(Request $request, Quiz $quiz)
+{
+    Excel::import(new QuizResultsImport($quiz), $request->file('results'));
 
-    // public function submitQuiz(Request $request, Quiz $quiz)
-    // {
-    //     foreach ($request->input('questions') as $question_id => $selected_option) {
-    //         UserAnswer::create([
-    //             'user_id' => auth()->id(),
-    //             'quiz_id' => $quiz->id,
-    //             'question_id' => $question_id,
-    //             'selected_option' => $selected_option
-    //         ]);
-    //     }
+    return redirect()->route('admin.quizzes.results', $quiz->id);
+}
+    public function uploadQuizResultsForm(Quiz $quiz)
+{
+    return view('quizzes.upload-results', compact('quiz'));
+}
 
-    //     return redirect()->route('quizzes.index')->with('message', 'Quiz submitted!');
-    // }
+public function adminUploadQuizResultsForm(Quiz $quiz)
+{
+    return view('admin.quiz.resultForm', compact('quiz'));
+}
 
 
+public function uploadForm()
+{
+    $classes = SchoolClass::all();
+    $subjects = Subject::all();
+    return view('quizzes.upload', compact('classes','subjects'));
+}
+public function adminUploadForm()
+{
+    $classes = SchoolClass::all();
+    $subjects = Subject::all();
+    return view('admin.quiz.quizUpload', compact('classes','subjects'));
+}
+public function uploadQuiz(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'class_id' => 'required',
+        'subject_id' => 'required',
+        'start_time' => 'required|date',
+        'end_time' => 'required|date|after:start_time',
+        'duration' => 'required|integer',
+        'quiz_file' => 'required|mimes:pdf,doc,docx|max:2048',
+    ]);
 
-  
+    // Store the uploaded file
+    $quizFile = $request->file('quiz_file');
+    $quizFile->storeAs('quizzes', $quizFile->getClientOriginalName(), 'public');
 
+    // Create a new quiz record
+    $quiz = new Quiz();
+    $quiz->title = $request->input('title');
+    $quiz->description = $request->input('description');
+    $quiz->class_id = $request->input('class_id');
+    $quiz->subject_id = $request->input('subject_id');
+    $quiz->start_time = $request->input('start_time');
+    $quiz->end_time = $request->input('end_time');
+    $quiz->duration = $request->input('duration');
+    $quiz->quiz_file = $quizFile->getClientOriginalName();
+    $quiz->save();
+
+    // Redirect to the quiz list page
+    return redirect()->route('teacher.quiz.index');
+}
+
+public function adminUploadQuiz(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'class_id' => 'required',
+        'subject_id' => 'required',
+        'start_time' => 'required|date',
+        'end_time' => 'required|date|after:start_time',
+        'duration' => 'required|integer',
+        'quiz_file' => 'required|mimes:pdf,doc,docx|max:2048',
+    ]);
+
+    // Store the uploaded file
+    $quizFile = $request->file('quiz_file');
+    $quizFile->storeAs('quizzes', $quizFile->getClientOriginalName(), 'public');
+
+    // Create a new quiz record
+    $quiz = new Quiz();
+    $quiz->title = $request->input('title');
+    $quiz->description = $request->input('description');
+    $quiz->class_id = $request->input('class_id');
+    $quiz->subject_id = $request->input('subject_id');
+    $quiz->start_time = $request->input('start_time');
+    $quiz->end_time = $request->input('end_time');
+    $quiz->duration = $request->input('duration');
+    $quiz->file_path = $quizFile->getClientOriginalName();
+    $quiz->save();
+
+    // Redirect to the quiz list page
+    return redirect()->route('admin.quiz.index');
+}
+// public function adminUploadQuiz(Request $request)
+// {
+//     // Validate the request
+//     $request->validate([
+//         'quiz_file' => 'required|mimes:pdf,doc,docx|max:2048',
+//     ]);
+
+//     // Store the uploaded file
+//     $quizFile = $request->file('quiz_file');
+//     $quizFile->storeAs('quizzes', $quizFile->getClientOriginalName(), 'public');
+
+//     // Create a new quiz record
+//     $quiz = new Quiz();
+//     $quiz->name = $request->input('name');
+//     $quiz->description = $request->input('description');
+//     $quiz->file_path = $quizFile->getClientOriginalName();
+//     $quiz->save();
+
+//     // Redirect to the quiz list page
+//     return redirect()->route('admin.quizzes.index');
+// }
 
 }

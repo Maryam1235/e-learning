@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Subject;
 use App\Models\Material;
 use App\Models\SchoolClass;
@@ -40,10 +41,25 @@ class SchoolClassController extends Controller
 
     public function viewClass(SchoolClass $school_class){
        
-        $subjects = $school_class->subjects;
+        $subjects = $school_class->adminSubjects;
         return view ('admin.class', [
             'subjects' => $subjects ,
             'school_class' => $school_class
+        ]);
+    }
+    public function teacherViewClass(SchoolClass $class)
+    {
+        $user = Auth::user(); 
+    
+        if (!$user || $user->role !== 'teacher') {
+            return redirect()->route('home')->with('error', 'Unauthorized access.');
+        }
+    
+        $assignedSubjects = $class->subjects()->where('user_id', $user->id)->get();
+    
+        return view('teacher.class', [
+            'school_class' => $class,
+            'teacherSubjects' => $assignedSubjects,
         ]);
     }
 

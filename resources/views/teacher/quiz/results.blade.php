@@ -1,5 +1,7 @@
+
 @extends('components.dashmaster')
-{{-- @include('components.nav') --}}
+
+
 @section('body')
 
   <!-- Content Wrapper. Contains page content -->
@@ -9,13 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Subjects Management</h1>
+            <h1>Quiz Results</h1>
           </div>
           <div class="col-sm-6 ">
-           <a href="{{ route('subjectForm', $school_class->id) }}"> <i class="fa fa-plus"> </i> New Subject</a>
-          </div>
+            <a href="/uploadQuizResults"> <i class="fa fa-plus"> </i> Upload Quiz Results</a>
+           </div>
         </div>
-        
       </div><!-- /.container-fluid -->
     </section>
 
@@ -30,19 +31,25 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Name</th>
+                    <th>Student Name</th>
+                    {{-- <th>Score</th> --}}
+                    <th>Percentage</th>
+                    {{-- <th>Actions</th> --}}
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach ($subjects as $subject)
+                    @foreach ($quizResults as $quizResult)
                   <tr>
-                    <td>
-                      <a href="{{ route('admin.subjects', ['class' => $school_class->id, 'subject' => $subject->id]) }}" class="btn btn-secondary">View {{ $subject->name }} Materials </a>
-                    </td>
+                    <td>{{ $quizResult->student->name }}</td>
+                    {{-- <td>{{ $quizResult->score }} / {{ $result->total_questions }}</td> --}}
+                    <td>{{ $quizResult->percentage }}%}</td>
+                    {{-- <td>
+                        <a href="{{ route('quizzes.student.results', [$quiz->id, $result->student_id]) }}">View Details</a>
+                
+                    </td> --}}
                   </tr>
-                  </tbody>
                   @endforeach
-
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -71,16 +78,8 @@
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+
   });
 </script>
-</body>
-</html>
+
+@endsection

@@ -45,6 +45,7 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::put('/editedUser/{user}', [AdminController::class, 'updatedUser']);
     Route::delete('/deleteUser/{user}', [AdminController::class, 'destroy']);
 
+
     // route status
     Route::post('/admin/users/{user}/status', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateStatus');
     Route::patch('/admin/users/{user}/status', [AuthController::class, 'updateStatus'])->name('admin.updateStatus');
@@ -56,6 +57,11 @@ Route::middleware(['auth','role:admin'])->group(function (){
    
 
 
+    Route::get('admin/admin-users/create', [AdminController::class,'createAdminUser'])->name('adminUsers.create');
+    Route::post('admin/admin-users', [AdminController::class, 'storeAdminUser'])->name('adminUsers.store');
+
+    Route::get('admin/teachers/{user}/assign-class-subject', [AdminController::class,'assignClassSubject'])->name('adminUsers.assign-class-subject');
+    Route::post('admin/teachers/{teacher}/assign-class-subject', [AdminController::class,'storeClassSubjectAssignment'])->name('adminUsers.store-class-subject-assign');
 
 
     Route::get('/admin/classes',[SchoolClassController::class, 'classes'])->name('admin.classes');
@@ -87,12 +93,16 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::get('/admin/quizzes', [QuizController::class, 'adminIndex'])->name('admin.quizzes.index'); 
     Route::get('/admin/quizzes/create', [QuizController::class, 'adminCreateQuiz'])->name('admin.quizzes.create');
     Route::get('/admin/get-subjects/{classId}', [QuizController::class, 'getSubjectsByClass']);
-    Route::post('/admin/quizzes', [QuizController::class, 'adminStoreQuiz'])->name('admin.quizzes.store');      
+    Route::post('/admin/quizzes', [QuizController::class, 'adminStoreQuiz'])->name('admin.quizzes.store'); 
+    Route::get('admin/quizzes/upload', [QuizController::class,'adminUploadForm'])->name('admin.quizzes.upload');
+    Route::post('admin/quizzes/upload', [QuizController::class,'adminUploadQuiz'])->name('admin.quizzes.upload.post');     
     Route::get('/admin/quizzes/{quiz}', [QuizController::class, 'adminShowQuiz'])->name('admin.quizzes.show');  
     Route::get('/admin/quizzes/{quiz}/edit', [QuizController::class, 'adminEditQuiz'])->name('admin.quizzes.edit'); 
-    Route::put('/admin/quizzes/{quiz}', [QuizController::class, 'UpdateQuiz'])->name('admin.quizzes.update');  
+    Route::put('/admin/quizzes/{quiz}', [QuizController::class, 'adminUpdateQuiz'])->name('admin.quizzes.update');  
     Route::delete('/admin/quizzes/{quiz}', [QuizController::class, 'adminDestroyQuiz'])->name('admin.quizzes.destroy'); 
-
+    Route::get('/admin/quizzes/{quiz}/results',[QuizController::class, 'adminViewQuizResults'])->name('admin.quizzes.results');
+    Route::get('/admin/quizzes/{quiz}/upload-results-form', [QuizController::class,'adminUploadQuizResultsForm'])->name('admin.quizzes.uploadResults.form');
+    Route::post('/admin/quizzes/{quiz}/upload-results', [QuizController::class,'adminUploadQuizResults'])->name('admin.quizzes.uploadResults');
 
 
     //blog 
@@ -116,7 +126,7 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/teacher/addClass', [TeacherController::class, 'teacherClassForm']);
     Route::post('/teacherStoreClass', [TeacherController::class, 'teacherAddClass'])->name('teacherStoreClass');
     Route::delete('/teacher/deleteClass/{school_class}', [SchoolClassController::class, 'destroyClass']);
-    Route::get('/teacher/viewClass/{school_class}',[SchoolClassController::class, 'viewClass'])->name('teacher.class');
+    Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
     Route::get('/teacher/viewClass/{school_class}',[TeacherController::class, 'teacherViewClass'])->name('teacher.class');
     // Route::get('/teacher/viewClass/{school_class}/addSubject', [TeacherController::class, 'subjectForm'])->name('teacher.subjectForm');
     // Route::post('/teacher/viewClass/{school_class}/storeSubject', [TeacherController::class, 'addSubject'])->name('teacher.storeSubject');
@@ -173,6 +183,8 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/teacher/quizzes/{quiz}/edit', [QuizController::class, 'editQuiz'])->name('quizzes.edit'); 
     Route::put('/teacher/quizzes/{quiz}', [QuizController::class, 'updateQuiz'])->name('quizzes.update');  
     Route::delete('/teacher/quizzes/{quiz}', [QuizController::class, 'destroyQuiz'])->name('quizzes.destroy'); 
+    Route::get('/teacher/quizzes/{quiz}/results',[QuizController::class, 'viewQuizResults'])->name('quizzes.results');
+    Route::post('/teacher/quizzes/{quiz}/upload-results', [QuizController::class,'uploadQuizResults'])->name('quizzes.uploadResults');
 
 
 
@@ -202,7 +214,6 @@ Route::middleware(['auth','role:student'])->group(function (){
         
     //quizzes
     Route::get('/student/quizzes', [QuizController::class, 'studentIndex'])->name('student.quizzes');
-    // Route to display the quiz to students
     Route::get('/student/quizzes/{quiz}/start', [QuizController::class, 'takeQuiz'])->name('quizzes.start');
 
     // Route to submit the quiz answers

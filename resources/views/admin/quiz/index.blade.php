@@ -14,8 +14,10 @@
             <h1>Quizzes Management</h1>
           </div>
           <div class="col-sm-6 text-right">
-            <a href="{{ route('admin.quizzes.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> New Quiz</a>
+            <a href="{{ route('admin.quizzes.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Create Quiz</a>
+            <a href="{{ route('admin.quizzes.upload') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Upload Quiz</a>
           </div>
+         
         </div>
       </div><!-- /.container-fluid -->
     </section>

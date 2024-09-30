@@ -13,8 +13,9 @@
           <div class="col-sm-6">
             <h1>Users Management</h1>
           </div>
-          <div class="col-sm-6 ">
-           <a href="/addUser"> <i class="fa fa-plus"> </i> New User</a>
+          <div class="col-sm-6 text-right">
+            <a href="/addUser" class="btn btn-primary"> <i class="fa fa-plus"></i>  New User</a>
+            <a href="{{route('adminUsers.create')}}" class="btn btn-primary"> <i class="fa fa-plus"></i>  New Admin User</a>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -47,7 +48,19 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->school }}</td>
-                    <td>{{ optional($user->schoolClass)->name ?? 'No class assigned' }}</td>
+                    <td>
+                      {{-- @if(optional($user->schoolClass)->name)
+                      {{ optional($user->schoolClass)->name }}
+                      @else
+                      <a href="{{ route('adminUsers.assign-class-subject', $user->id) }}" class="btn btn-primary">Assign Class</a>
+                      @endif --}}
+
+                      @if($user->role === 'teacher' && !optional($user->schoolClass)->name)
+                      <a href="{{ route('adminUsers.assign-class-subject', $user->id) }}" class="btn btn-primary">Assign Class</a>
+                      @else
+                          {{ optional($user->schoolClass)->name }}
+                      @endif
+                    </td>
                     <td>{{ $user->role }}</td>
                       {{-- status --}}
                      <td>

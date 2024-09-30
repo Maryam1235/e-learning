@@ -36,6 +36,7 @@
 
         <a href="{{ route('admin.quizzes.edit', $quiz->id) }}" class="btn btn-primary mt-4">Edit Quiz</a> 
         <a href="{{ route('admin.quizzes.index') }}" class="btn btn-primary mt-4">Go Back</a>
+        <a href="{{ route('admin.quizzes.results', $quiz->id) }}" class="btn btn-primary mt-4">Quiz Results</a>
     </div>
 </div>
 @endsection

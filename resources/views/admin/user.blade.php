@@ -30,6 +30,25 @@
                     <h2>School :</h2>
                     <h4>{{$user->school}}</h4>
                 </div>
+                    <!-- Display assigned classes and subjects -->
+                <div class="row">
+                    <h2>Assigned Classes and Subjects:</h2>
+                    @if($user->classes->isNotEmpty())
+                        <ul>
+                            @foreach($user->classes as $class)
+                                <li>
+                                    {{ $class->name }} - 
+                                    @foreach($class->subjects as $subject)
+                                        {{ $subject->name }}
+                                    @endforeach
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>No classes assigned yet.</p>
+                    @endif
+                </div>
+                
                 <div >
                 <button type="submit" class="btn btn-success btn-primary mt-3 text-center px-3" onclick="window.location.href='/editUser/{{$user->id}}' ">
                     Edit User 

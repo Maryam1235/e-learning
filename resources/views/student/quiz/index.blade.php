@@ -14,6 +14,11 @@
         </div>
       </div>
     </section>
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
     <section class="content">
       <div class="container-fluid">

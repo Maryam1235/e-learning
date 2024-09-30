@@ -56,14 +56,18 @@ public function schoolClass()
 
 public function classes()
 {
-    return $this->belongsToMany(SchoolClass::class,  'teacher_subject_class', 'teacher_id', 'school_class_id')
+    return $this->belongsToMany(SchoolClass::class,  'teacher_class_subject_pivots', 'user_id', 'class_id')
                 ->withPivot('subject_id');
 }
 
 public function subjects()
 {
-    return $this->belongsToMany(Subject::class, 'teacher_subject_class', 'teacher_id', 'subject_id')
-                ->withPivot('school_class_id');
+    return $this->hasMany(Subject::class, 'class_id');
+}
+public function teacherSubjects()
+{
+    return $this->belongsToMany(Subject::class, 'teacher_class_subject_pivots', 'user_id', 'subject_id')
+                ->withPivot('class_id');
 }
 
 

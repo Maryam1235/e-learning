@@ -20,11 +20,11 @@ class TeacherController extends Controller
     public function index(){
         $teacher = Auth::user();
         $classes = $teacher->classrooms;
-        $subjects = $teacher->subjects;
+        // $subjects = $teacher->subjects;
         return view('teacher.dashboard',[
             'teacher' => $teacher,
             'classes' => $classes,
-            'subjects' => $subjects
+            // 'subjects' => $subjects
         ]);
     }
 
@@ -35,8 +35,10 @@ class TeacherController extends Controller
         ]);
     }
     public function teacherClasses(){
-    
-        $schoolClasses = SchoolClass::all();
+        $userId = Auth::id(); 
+        $user = User::findOrFail($userId); 
+        $schoolClasses = $user->classes;
+        // $schoolClasses = SchoolClass::all();
         return view ('teacher.classes', [
             'schoolClasses' => $schoolClasses
         ]);

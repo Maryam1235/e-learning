@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quiz_results', function (Blueprint $table) {
+        Schema::create('teacher_class_subject_pivots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quiz_id')->constrained()->onDelete('cascade');
-            $table->foreignId('student_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->integer('score');
-            $table->integer('total_questions');
-            $table->float('percentage');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('class_id')->constrained('school_classes')->onDelete('cascade');
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quiz_results');
+        Schema::dropIfExists('teacher_class_subject_pivot');
     }
 };
