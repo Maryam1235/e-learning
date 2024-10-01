@@ -21,11 +21,11 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-                <h2>Click the button below to start an online tutoring session</h2>
+                <h2>Click the button below to start an online tutoring session or Join a meeting</h2>
               <div class="card-body">
 
                 <a href="{{route('teacher.createMeeting')}}" class="btn btn-primary">Create New Online Session</a>  
-                    
+                <a href="{{ route('teacher.joinOnlineSessions') }}" class="btn btn-primary"> Enter code to join a meeting</a>  
 
               </div>
               <!-- /.card-body -->

@@ -7,6 +7,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\MaterialController;
@@ -15,6 +16,10 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\OnlineSessionController;
+
+// search
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+
 
 
 Route::get('/adminLTE', [IndexController::class, 'adminLTE'])->name('adminLTE');
@@ -76,6 +81,8 @@ Route::middleware(['auth','role:admin'])->group(function (){
 
     Route::get('/admin/onlineSessions', [OnlineSessionController::class, 'adminIndex'])->name('admin.onlineSessions');
     Route::get('/admin/create-meeting', [OnlineSessionController::class, 'adminCreateMeeting'])->name('admin.createMeeting');
+    Route::get('/admin/joinOnlineSessions', [OnlineSessionController::class, 'adminJoinIndex'])->name('admin.joinOnlineSessions');
+    Route::post('/admin/join-meeting', [OnlineSessionController::class, 'joinMeeting'])->name('admin.joinMeeting');
 
 
     Route::get('/admin/reports',[ReportController::class, 'reports'])->name('admin.report');
@@ -126,8 +133,10 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/teacher/addClass', [TeacherController::class, 'teacherClassForm']);
     Route::post('/teacherStoreClass', [TeacherController::class, 'teacherAddClass'])->name('teacherStoreClass');
     Route::delete('/teacher/deleteClass/{school_class}', [SchoolClassController::class, 'destroyClass']);
-    Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
+    // Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
     Route::get('/teacher/viewClass/{school_class}',[TeacherController::class, 'teacherViewClass'])->name('teacher.class');
+
+
     // Route::get('/teacher/viewClass/{school_class}/addSubject', [TeacherController::class, 'subjectForm'])->name('teacher.subjectForm');
     // Route::post('/teacher/viewClass/{school_class}/storeSubject', [TeacherController::class, 'addSubject'])->name('teacher.storeSubject');
     // Route::delete('/deleteSubject/{subject}', [SchoolClassController::class, 'destroySubject']);
@@ -166,6 +175,8 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     //teacher Online sessions
     Route::get('/teacher/onlineSessions', [OnlineSessionController::class, 'index'])->name('teacher.onlineSessions');
     Route::get('/teacher/create-meeting', [OnlineSessionController::class, 'createMeeting'])->name('teacher.createMeeting');
+    Route::get('/teacher/joinOnlineSessions', [OnlineSessionController::class, 'teacherJoinIndex'])->name('teacher.joinOnlineSessions');
+    Route::post('/teacher/join-meeting', [OnlineSessionController::class, 'joinMeeting'])->name('teacher.joinMeeting');
 
     //reports
     Route::get('/teacher/reports',[ReportController::class, 'teacherReports'])->name('teacher.report');

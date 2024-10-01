@@ -1,44 +1,4 @@
-{{-- <x-layout />
-@include('partials.header')
-    <div class="background">
-
-    </div>
-   <div id='log'>
-        <p >
-           <b> WELCOME TO SUMAJKT eLEARNING MANAGEMENT SYSTEM </b>
-        </p>
-   
-     <div class="login-container">
-        <h1>Login</h1>
-        <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <div>
-        <input type="email" name="email" placeholder="Email" required><br>
-         @error('email')
-                <span class="text-danger">{{ $message }}</span>
-              @enderror
-        </div>
-        <div>
-        <input type="password" name="password" placeholder="Password" required><br>
-         @error('password')
-                <span class="text-danger">{{ $message }}</span>
-              @enderror
-        </div>
-            
-            
-            <input type="checkbox" id="remember">
-            <label for="remember">
-              Remember Me
-            </label>
-            <input type="submit" value="Login">
-        </form>
-    
-        <p>Don't have an account?</p>
-        <a href="{{ route('regForm') }}">Register here</a>
-        
-    </div>  --}}
-
-    <x-layout />
+<x-layout />
 @include('partials.header')
 
 <div id="log">
@@ -79,7 +39,6 @@
         var passwordInput = document.getElementById(fieldId);
         var eyeIcon = document.getElementById(iconId);
         
-        // Toggle between 'password' and 'text'
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
             eyeIcon.classList.remove('fa-eye');

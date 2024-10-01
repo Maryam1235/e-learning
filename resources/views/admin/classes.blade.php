@@ -1,5 +1,4 @@
 @extends('components.dashmaster')
-@include('components.nav')
 
 @section('body')
 
@@ -45,26 +44,13 @@
 
                 </table>
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 
-
-
-<!-- ./wrapper -->
-
-
-<!-- Page specific script -->
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -82,5 +68,4 @@
     });
   });
 </script>
-</body>
-</html>
+@endsection

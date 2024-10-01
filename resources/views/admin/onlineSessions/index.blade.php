@@ -24,7 +24,8 @@
                 <h2>Click the button below to start an online tutoring session</h2>
               <div class="card-body">
 
-                <a href="{{route('admin.createMeeting')}}" class="btn btn-primary">Create New Online Session</a>  
+                <a href="{{route('admin.createMeeting')}}" class="btn btn-primary">Create New Online Session</a>
+                <a href="{{ route('admin.joinOnlineSessions') }}" class="btn btn-primary"> Enter code to join a meeting</a>    
                     
 
               </div>

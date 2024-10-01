@@ -25,6 +25,14 @@ class OnlineSessionController extends Controller
     {
         return view('student.onlineSessions.joinOnlineSession');
     }
+    public function teacherJoinIndex()
+    {
+        return view('teacher.onlineSessions.joinOnlineSession');
+    }
+    public function adminJoinIndex()
+    {
+        return view('admin.onlineSessions.joinOnlineSession');
+    }
 
     public function onlineSessionForm()
     {

@@ -1,31 +1,14 @@
 /* -------------------------------------
          body-css
 ------------------------------------- */
-
-
-/* body, html {
-    font-family: 'Arial', sans-serif;
-    background-color: #b4e0d4;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%; 
-} */
-
 body {
     display: flex;
-    /* background-color: #b4e0d4; */
-    
     flex-direction: column;
-    min-height: 100vh; /* Ensure body takes at least the full viewport height */
+    min-height: 100vh; 
 }
 
 
 main {
-    /* flex: 1;  */
-    /* padding: 20px;  */
-    
     padding-top: 90px;
     margin-left: auto;
     margin-right: auto;
@@ -42,19 +25,15 @@ main {
     width: 100%;
     height: 100%;
     padding-top: 120px;
-    background-image: url('../../public/images/elimu.png'); /* Replace with your background image */
+    background-image: url('../../public/images/elimu.png'); 
     background-size: cover;
     background-size:50% 50%;
     background-repeat: no-repeat;
 
     background-position: center;
     opacity: 0.5; 
-    z-index: -1; /* Ensure it's behind other content */
+    z-index: -1; 
 }
-
-
-/* modifies */
-
 .header {
     position: fixed;
     top: 0;
@@ -69,13 +48,13 @@ main {
 }
 
 .logo-left, .logo-right {
-    flex-shrink: 0; /* Prevent logos from shrinking or expanding */
+    flex-shrink: 0; 
 }
 
 .header h1 {
-    flex-grow: 1; /* Allow the h1 to take up remaining space */
+    flex-grow: 1;
     font-size: 2vw;
-    text-align: center; /* Center the h1 */
+    text-align: center;
     margin: 0;
 }
 
@@ -88,63 +67,26 @@ h1 {
     color: rgba(2, 82, 2, 0.99);
 }
 
-/* Media query for smaller screens */
 @media (max-width: 768px) {
     .header {
-        height: auto; /* Let height adjust automatically */
+        height: auto;
         padding: 10px;
     }
 
     .header h1 {
-        font-size: 4vw; /* Adjust the font size for smaller screens */
+        font-size: 4vw; 
     }
 
     .logo-left img, .logo-right img {
-        height: 80px; /* Reduce logo size on smaller screens */
+        height: 80px;
         width: 80px;
     }
 }
 
-
-/* .header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 120px; 
-    background-color: white; 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px; 
-    z-index: 1000; 
-}
-
-.header h1{
-    font-size: 31px;
-    text-align: center;
-}
-
-.logo-left img, .logo-right img {
-    height: 100px; 
-}
-
-.logo-left {
-    margin-left: 0; 
-}
-
-.logo-right {
-    margin-right: 0; 
-}
-
-h1{
-    color: rgba(2, 82, 2, 0.99);
-} */
-
-
 .ml-6 {
     display: flex;
     justify-content: center;
-    margin-top: 150px; /* Added margin to prevent content overlap with fixed header */
+    margin-top: 150px; 
 }
 
 .photo {
@@ -152,7 +94,7 @@ h1{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px; /* Added margin-top to ensure it's below the header */
+    margin-top: 20px; 
 }
 
 .photo > div {
@@ -169,25 +111,6 @@ h1{
 .photo h1 {
     text-align: center;
 }
-
-
-
-/* marque css*/
-.moving-text {
-    padding-top: 25px;
-    text-align: center;
-    animation: move-text 20s infinite linear;
-   
-  }
-  
-  @keyframes move-text {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
 /* -------------------------------------
          slider-css
 ------------------------------------- */
@@ -196,11 +119,11 @@ h1{
         position: relative;
         width: 100%;
         max-width: 100%;
-        height: 500px; /* Adjust the height as needed */
+        height: 500px; 
         overflow: hidden;
-        display: flex; /* Enables flexbox layout */
-        justify-content: center; /* Centers content horizontally */
-        align-items: center; /* Centers content vertically */
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
     }
     
     .image-bar {
@@ -226,23 +149,23 @@ h1{
     .image-slide img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Ensures the image covers the entire slide area */
+        object-fit: cover; 
     }
     
     .text-overlay {
         position: absolute;
-        bottom: 20px; /* Adjust as necessary */
+        bottom: 20px; 
         left: 20px;
         color: white;
         font-size: 10px;
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
+        background: rgba(0, 0, 0, 0.5); 
         padding: 10px;
         border-radius: 5px;
     }
 
 
     .carousel-item {
-        position: relative; /* To position the overlay correctly */
+        position: relative; 
     }
     
     .carousel-item::before {
@@ -251,29 +174,18 @@ h1{
         bottom: 0;
         left: 0;
         right: 0;
-        height: 50%; /* Adjust to control the size of the gradient */
+        height: 50%; 
         background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-        z-index: 1; /* Make sure the gradient is below the text */
+        z-index: 1; 
     }
     
     .carousel-caption {
         position: absolute;
-        bottom: 20px; /* Position the caption text at the bottom */
-        z-index: 2;   /* Ensure the text is above the gradient */
-        color: #fff;  /* Set text color to stand out against the gradient */
+        bottom: 20px; 
+        z-index: 2;  
+        color: #fff;  
     }
-    
-
-    /* .overlay-gradient {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))
-                   ;
-        background-size: cover;
-        background-position: center;
-        height: 520px;
-        width: 100%;
-    } */
-
-    
+     
 /* -------------------------------------
          button-css
 ------------------------------------- */
@@ -284,9 +196,9 @@ h1{
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #007bff; /* Blue background */
+    background-color: #007bff; 
     border: none;
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 5px; 
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -294,17 +206,17 @@ h1{
 }
 
 .button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    background-color: #0056b3; 
+    transform: scale(1.05); 
 }
 
 .button:active {
-    background-color: #00408d; /* Even darker blue when button is clicked */
-    transform: scale(0.95); /* Slightly shrink the button on click */
+    background-color: #00408d; 
+    transform: scale(0.95); 
 }
 
 .button:disabled {
-    background-color: #ccc; /* Gray background for disabled button */
+    background-color: #ccc;
     cursor: not-allowed;
 }
 
@@ -312,111 +224,30 @@ h1{
 /* -------------------------------------
          login-css
 ------------------------------------- */
-/* #log{
-    background-color: rgb(96, 224, 198);
-    background-image: url('../../public/images/IMG13.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: fixed;
-    padding: 90px;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 120px;
-   
-}
-#log >p{
-    color: white;
-    padding: 2%;
-    font-size: 36px;
-    margin-top: 30vh;
-}
-#Alog{
-    padding: 90px;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 120px;
-   
-}
-
-#Alog >p{
-    color: white;
-    padding: 1%;
-    font-size: 30px;
-    margin-top: 30vh;
-}
-.login-container {
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-
-.login-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.login-container input[type="email"],
-.login-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
-    color: #333;
-}
-
-.login-container input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.login-container input[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-.login-container input[type="email"]:focus,
-.login-container input[type="password"]:focus {
-    border-color: #80bdff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-}
-
-.login-container a {
-    color: #007bff;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-}
-
-.login-container a:hover {
-    text-decoration: none;
-} */
- /* For the background container */
 #log {
     background-image: url('../../public/images/IMG13.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed; 
     background-position: center center;
-    height: 100vh; 
+    min-height: 100vh; 
     display: flex;
     justify-content: center;
-    align-items: center;
-
+    align-items: flex-start; 
+    overflow: auto; 
+    padding-top: 150px; 
+}
+#Alog {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed; 
+    background-position: center center;
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    overflow: auto; 
+    padding-top: 80px; 
 }
 
 .login-container {
@@ -489,95 +320,13 @@ h1{
 /* -------------------------------------
          register-css
 ------------------------------------- */
-
-/* .form-container {
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-
-.form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.form-container input[type="text"],
-.form-container input[type="email"],
-.form-container input[type="password"],
-.form-container select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
-    color: #333;
-}
-
-.form-container input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.form-container input[type="submit"]:hover {
-    background-color: #218838;
-}
-
-.form-container input[type="text"]:focus,
-.form-container input[type="email"]:focus,
-.form-container input[type="password"]:focus,
-.form-container select:focus {
-    border-color: #80bdff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-}
-
-.form-container a {
-    color: #007bff;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-}
-
-.form-container a:hover {
-    text-decoration: underline;
-} */
-
-  /* Styling for the registration form */
-  /* #log {
-    background-color: rgb(96, 224, 198);
-    background-image: url('../../public/images/IMG13.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; 
-    padding: 90px;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 120px;
-} */
-
 .form-container {
     background: rgba(255, 255, 255, 0.8);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
-    margin: auto;
-    overflow: auto;
+    margin-bottom: 50px; 
 }
 
 .form-container h2 {
@@ -639,7 +388,9 @@ h1{
 
 
 
-/* footer */
+/*........................... 
+footer 
+.............................*/
 .footer{
     background-color: rgba(13, 91, 12, 0.976);
     padding-left: 12%;
@@ -670,38 +421,7 @@ h1{
 .sidebarMenu{
     background-color: #ad2828;
 }
-
-/* .sidebar {
-    /* background-color: rgb(220, 224, 96); 
-    width: 200px;
-    position: fixed;
-    height: 100%;
-    padding-top: 2px;
-  } */
   
-  /* .sidebar a {
-    color: white;
-    padding: 10px;
-    display: flex; 
-    align-items: center; 
-    text-decoration: none;
-  } */
-  
-  /* .sidebar a i { 
-    margin-right: 10px; 
-  }
-   */
-  /* .sidebar a:hover {
-    background-color: #4CAF50;
-  } */
-  
-  /* .sidebar a span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
-  } */
-  
-
   .welcome-message {
     background-color: #f8f9fa;
     border-left: 5px solid #007bff;
@@ -747,24 +467,13 @@ h1{
 }
 .Apadding-c{
     padding: 20% 35%;
-    /* background-image: url('../../public/images/class.jpeg');
-    background-size: cover; 
-    background-position: fixed;
-    background-repeat: no-repeat;  */
     height: 100%; 
     width: 100%;
     
 }
 
 .sub{
-    /* background-color: rgb(96, 224, 198); */
-    /* background-image: url('../../public/images/bg4.jpg'); */
-    /* background-image: url('../../public/images/sub.jpg'); */
-    /* background-repeat: no-repeat;
-    background-size: cover;
-    background-position: fixed; */
     padding: 90px;
-    /* border: 2px solid yellow; */
     display: flex;
     justify-content: flex-end;
     padding-top: 120px;
@@ -779,14 +488,7 @@ h1{
 }
 
 .Tsub{
-    /* background-color: rgb(96, 224, 198); */
-    /* background-image: url('../../public/images/bg4.jpg'); */
-    /* background-image: url('../../public/images/Tsub.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: fixed; */
     padding: 90px;
-    /* border: 2px solid yellow; */
     display: flex;
     justify-content: flex-end;
     padding-top: 120px;
@@ -809,18 +511,9 @@ h1{
      1px  1px 0 #000; 
 }
 
-/* .Dashboard{
-    background-color: rgb(96, 224, 198);
-    background-image: url('../../public/images/online.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: fixed;
-    padding: 90px;
-
-
-} */
-
-/* todo list */
+/*................................
+ todo list 
+ .................................*/
 .to_do_list_custom{
     list-style: none;
     padding: 0;
@@ -853,7 +546,9 @@ h1{
 }
 
 
-/* blog */
+/*...............................
+ blog 
+ ...............................*/
 .card {
     background: #fff;
     transition: .5s;

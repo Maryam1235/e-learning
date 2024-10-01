@@ -3,9 +3,6 @@
 
   <div class="content-wrapper custom-dashboard">
 <div id="Alog">
-    <p >
-           <b> WELCOME TO SUMAJKT eLEARNING MANAGEMENT SYSTEM </b>
-    </p>
     <div class="form-container">
         <h2>Register a new Admin User</h2>
         <form method="POST" action="{{route ('adminUsers.store')}}">

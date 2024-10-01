@@ -19,26 +19,29 @@ class AdminController extends Controller
     public function index(){
         $users = User::all();
         $classes = SchoolClass::all();
+        
         // dd($users);
         $userCount = User::count();
         $classCount = SchoolClass::count();
-        $teacherCount = User::where('role',  'teacher')->count();
-        $studentCount = User::where('role',  'student')->count();
+        // $teacherCount = User::where('role',  'teacher')->count();
+        // $studentCount = User::where('role',  'student')->count();
+        $inactiveCount = User::where('status', 'inactive')->count();
         
 
-        $studentsList = User::where('role', 'student')->get();
-        $teachersList = User::where('role', 'teacher')->get();
+        // $studentsList = User::where('role', 'student')->get();
+        // $teachersList = User::where('role', 'teacher')->get();
       
         return view('admin.dashboard',['stat' => [
             'users' => $users,
             'usersCount' => $userCount,
             'classesCount' => $classCount,
-            'teachers' => $teacherCount,
-            'students' => $studentCount,
+            'inactiveCount' =>$inactiveCount,
+            // 'teachers' => $teacherCount,
+            // 'students' => $studentCount,
         ],
     
-        'studentsList' => $studentsList,
-        'teachersList' => $teachersList,
+        // 'studentsList' => $studentsList,
+        // 'teachersList' => $teachersList,
     
     ]);
     }
@@ -182,6 +185,28 @@ class AdminController extends Controller
     return view('admin.adminUsers.assign-class-subject', compact('teacher', 'classes', 'subjects'));
 }
 
+// public function storeClassSubjectAssignment(Request $request, $teacherId)
+// {
+//     $validated = $request->validate([
+//         'classes.*' => 'required|exists:school_classes,id',
+//         'subjects.*' => 'required|exists:subjects,id',
+//     ]);
+
+//     foreach ($validated['classes'] as $index => $classId) {
+//         if (!empty($validated['subjects'][$index])) {
+//             DB::table('teacher_class_subject_pivots')->insert([
+//                 'user_id' => $teacherId,
+//                 'class_id' => $classId,
+//                 'subject_id' => $validated['subjects'][$index],
+//                 'created_at' => now(),
+//                 'updated_at' => now(),
+//             ]);
+//         }
+//     }
+
+//     return redirect()->route('admin.users')->with('success', 'Classes and subjects assigned successfully!');
+// }
+
 public function storeClassSubjectAssignment(Request $request, $teacherId)
 {
     $validated = $request->validate([
@@ -190,11 +215,21 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
     ]);
 
     foreach ($validated['classes'] as $index => $classId) {
-        if (!empty($validated['subjects'][$index])) {
+        $subjectId = $validated['subjects'][$index];
+        
+        // Check if this class-subject pair is already assigned to the teacher
+        $existingAssignment = DB::table('teacher_class_subject_pivots')
+            ->where('user_id', $teacherId)
+            ->where('class_id', $classId)
+            ->where('subject_id', $subjectId)
+            ->first();
+
+        if (!$existingAssignment) {
+            // Only insert if the assignment does not already exist
             DB::table('teacher_class_subject_pivots')->insert([
                 'user_id' => $teacherId,
                 'class_id' => $classId,
-                'subject_id' => $validated['subjects'][$index],
+                'subject_id' => $subjectId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -203,6 +238,7 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
 
     return redirect()->route('admin.users')->with('success', 'Classes and subjects assigned successfully!');
 }
+
 
 
 

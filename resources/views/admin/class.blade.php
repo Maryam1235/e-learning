@@ -31,6 +31,7 @@
                   <thead>
                   <tr>
                     <th>Name</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -38,6 +39,18 @@
                   <tr>
                     <td>
                       <a href="{{ route('admin.subjects', ['class' => $school_class->id, 'subject' => $subject->id]) }}" class="btn btn-secondary">View {{ $subject->name }} Materials </a>
+                    </td>
+                    <td>
+                       <form action="/deleteSubject/{{$subject->id}}" method="POST" style="display:inline;">
+                          @csrf
+                          @method('DELETE')
+                          <button onclick="return confirm('Are you sure you want to delete this subject?')" class="btn btn-danger btn-sm">
+                              <i class="text-danger fa fa-trash" > 
+                              <span class="d-none d-md-inline-block"> </span></i>
+                          </button>
+                        </form>
+
+
                     </td>
                   </tr>
                   </tbody>
@@ -82,5 +95,4 @@
     });
   });
 </script>
-</body>
-</html>
+@endsection
