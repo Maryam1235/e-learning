@@ -32,7 +32,11 @@
                 </div>
                     <!-- Display assigned classes and subjects -->
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 {{-- <div class="row">
+=======
+                <div class="row">
+>>>>>>> Stashed changes
 =======
                 <div class="row">
 >>>>>>> Stashed changes
@@ -51,6 +55,7 @@
                     @else
                         <p>No classes assigned yet.</p>
                     @endif
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 </div> --}}
                 <!-- Display assigned classes and subjects -->
@@ -73,6 +78,8 @@
     
               <div >
 =======
+=======
+>>>>>>> Stashed changes
                 </div>
                 
                 <div >

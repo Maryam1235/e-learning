@@ -50,7 +50,8 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::put('/editedUser/{user}', [AdminController::class, 'updatedUser']);
     Route::delete('/deleteUser/{user}', [AdminController::class, 'destroy']);
 
-<<<<<<< Updated upstream
+
+
 
     // route status
     Route::post('/admin/users/{user}/status', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateStatus');
@@ -60,21 +61,16 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::get('/admin/reset-password/{user}', [AdminController::class, 'resetPassword'])->name('admin.resetPassword');
     Route::post('/admin/reset-password/{user}', [AdminController::class, 'updatePassword'])->name('admin.updatePassword');
 
-   
 
-
-=======
->>>>>>> Stashed changes
     Route::get('admin/admin-users/create', [AdminController::class,'createAdminUser'])->name('adminUsers.create');
     Route::post('admin/admin-users', [AdminController::class, 'storeAdminUser'])->name('adminUsers.store');
 
     Route::get('admin/teachers/{user}/assign-class-subject', [AdminController::class,'assignClassSubject'])->name('adminUsers.assign-class-subject');
     Route::post('admin/teachers/{teacher}/assign-class-subject', [AdminController::class,'storeClassSubjectAssignment'])->name('adminUsers.store-class-subject-assign');
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
+
+
     Route::get('/admin/classes',[SchoolClassController::class, 'classes'])->name('admin.classes');
     Route::get('/addClass', [SchoolClassController::class, 'classForm']);
     Route::post('/storeClass', [SchoolClassController::class, 'addClass'])->name('storeClass');
@@ -139,11 +135,13 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/teacher/addClass', [TeacherController::class, 'teacherClassForm']);
     Route::post('/teacherStoreClass', [TeacherController::class, 'teacherAddClass'])->name('teacherStoreClass');
     Route::delete('/teacher/deleteClass/{school_class}', [SchoolClassController::class, 'destroyClass']);
-<<<<<<< Updated upstream
+
     // Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
-=======
+
     Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
->>>>>>> Stashed changes
+
+    Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
+
     Route::get('/teacher/viewClass/{school_class}',[TeacherController::class, 'teacherViewClass'])->name('teacher.class');
 
 

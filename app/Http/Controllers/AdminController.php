@@ -7,11 +7,17 @@ use App\Models\Subject;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\TeacherSubjectClass;
 use App\Models\TeacherClassSubjectPivot;
 
+=======
+use Illuminate\Support\Facades\DB;
+use App\Models\TeacherSubjectClass;
+use App\Models\TeacherClassSubjectPivot;
+>>>>>>> Stashed changes
 =======
 use Illuminate\Support\Facades\DB;
 use App\Models\TeacherSubjectClass;
@@ -87,6 +93,7 @@ class AdminController extends Controller
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   
 
 public function viewUser(User $user)
@@ -107,6 +114,8 @@ public function viewUser(User $user)
 }
 
 =======
+=======
+>>>>>>> Stashed changes
     // public function viewUser(User $user){
         
     //     return view ('admin.user', [
@@ -155,6 +164,7 @@ public function viewUser(User $user)
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     public function updateUserStatus(Request $request, User $user)
     {
         $user->status = $request->status;
@@ -188,6 +198,8 @@ public function viewUser(User $user)
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
     public function createAdminUser()
     {
         $school_classes = SchoolClass::all();
@@ -215,7 +227,10 @@ public function viewUser(User $user)
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     // public function assignClassSubject(User $user)
     // {
     //     $teacher = $user;
@@ -227,6 +242,9 @@ public function viewUser(User $user)
         
     //     return view('admin.adminUsers.assign-class-subject', compact( 'teacher','classes'));
     // }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     public function assignClassSubject($userId)
@@ -238,6 +256,7 @@ public function viewUser(User $user)
     return view('admin.adminUsers.assign-class-subject', compact('teacher', 'classes', 'subjects'));
 }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 // public function storeClassSubjectAssignment(Request $request, $teacherId)
 // {
@@ -263,6 +282,8 @@ public function viewUser(User $user)
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 public function storeClassSubjectAssignment(Request $request, $teacherId)
 {
     $validated = $request->validate([
@@ -271,6 +292,7 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
     ]);
 
     foreach ($validated['classes'] as $index => $classId) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         $subjectId = $validated['subjects'][$index];
         
@@ -288,11 +310,16 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
                 'class_id' => $classId,
                 'subject_id' => $subjectId,
 =======
+=======
+>>>>>>> Stashed changes
         if (!empty($validated['subjects'][$index])) {
             DB::table('teacher_class_subject_pivots')->insert([
                 'user_id' => $teacherId,
                 'class_id' => $classId,
                 'subject_id' => $validated['subjects'][$index],
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -305,8 +332,11 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 =======
+=======
+>>>>>>> Stashed changes
     // public function storeClassSubjectAssignment(Request $request, User $user)
     // {
     //     if (strtolower($user->role) !== 'teacher') {
@@ -329,6 +359,9 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
 
     //     return redirect()->route('admin.users');
     // }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 }

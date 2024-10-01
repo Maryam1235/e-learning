@@ -39,7 +39,10 @@ class SchoolClass extends Model
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     public function assignments()
