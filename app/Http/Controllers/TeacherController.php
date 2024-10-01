@@ -35,7 +35,7 @@ class TeacherController extends Controller
             'school_classes' => $school_classes
         ]);
     }
-<<<<<<< Updated upstream
+
   
 
     public function teacherClasses()
@@ -49,17 +49,17 @@ class TeacherController extends Controller
         'schoolClasses' => $schoolClasses
     ]);
 }
-=======
-    public function teacherClasses(){
-        $userId = Auth::id(); 
-        $user = User::findOrFail($userId); 
-        $schoolClasses = $user->classes;
-        // $schoolClasses = SchoolClass::all();
-        return view ('teacher.classes', [
-            'schoolClasses' => $schoolClasses
-        ]);
-    }
->>>>>>> Stashed changes
+
+    // public function teacherClasses(){
+    //     $userId = Auth::id(); 
+    //     $user = User::findOrFail($userId); 
+    //     $schoolClasses = $user->classes;
+    //     // $schoolClasses = SchoolClass::all();
+    //     return view ('teacher.classes', [
+    //         'schoolClasses' => $schoolClasses
+    //     ]);
+    // }
+
 
 
     public function teacherAddClass(Request $request) {
@@ -74,20 +74,10 @@ class TeacherController extends Controller
        
     }
 
-    // public function teacherViewClass(SchoolClass $school_class){
-       
-    //     $subjects = $school_class->subjects;
-    //     return view ('teacher.class', [
-    //         'subjects' => $subjects ,
-    //         'school_class' => $school_class
-    //     ]);
-    // }
 
     public function teacherViewClass(SchoolClass $school_class)
 {
     $userId = Auth::id();
-
-    // Get subjects assigned to the teacher for the selected class
     $subjects = DB::table('teacher_class_subject_pivots')
         ->join('subjects', 'teacher_class_subject_pivots.subject_id', '=', 'subjects.id')
         ->where('teacher_class_subject_pivots.user_id', $userId)

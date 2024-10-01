@@ -82,9 +82,8 @@
                     <div class="card">
                         <div class="card-body">
                             <table id="subject" class="table table-bordered table-striped">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                              <thead>
+
+                              {{-- <thead>
                                   <tr>
                                       <th>Name</th>
                                   </tr>
@@ -98,10 +97,8 @@
                                       </tr>
                                   @endforeach
                               </tbody>
-                          </table>
-=======
-=======
->>>>>>> Stashed changes
+                          </table> --}}
+
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -117,10 +114,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
                         </div>
                     </div>
                 </div>

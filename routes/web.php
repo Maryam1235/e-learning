@@ -135,13 +135,6 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::get('/teacher/addClass', [TeacherController::class, 'teacherClassForm']);
     Route::post('/teacherStoreClass', [TeacherController::class, 'teacherAddClass'])->name('teacherStoreClass');
     Route::delete('/teacher/deleteClass/{school_class}', [SchoolClassController::class, 'destroyClass']);
-
-    // Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
-
-    Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
-
-    Route::get('/teacher/viewClass/{class}',[SchoolClassController::class, 'teacherViewClass'])->name('teacher.class');
-
     Route::get('/teacher/viewClass/{school_class}',[TeacherController::class, 'teacherViewClass'])->name('teacher.class');
 
 
