@@ -205,27 +205,5 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
 }
 
 
-    // public function storeClassSubjectAssignment(Request $request, User $user)
-    // {
-    //     if (strtolower($user->role) !== 'teacher') {
-    //         abort(403);
-    //     }
-    //     $request->validate([
-    //         'class_id' => 'required|exists:school_classes,id',
-    //         'subject_id' => 'required|exists:subjects,id',
-    //     ]);
-    
-
-    //     // $teacher->classes()->attach($request->input('class_id'));
-    //     TeacherClassSubjectPivot::create([
-    //         'user_id' => $user->id, 
-    //         'class_id' => $request->input('class_id'),
-    //         'subject_id' => $request->input('subject_id'), 
-    //         'created_at' => now(),
-    //         'updated_at' => now(),
-    //     ]);
-
-    //     return redirect()->route('admin.users');
-    // }
 
 }
