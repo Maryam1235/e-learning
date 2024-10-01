@@ -60,6 +60,8 @@ public function classes()
                 ->withPivot('subject_id');
 }
 
+
+
 public function subjects()
 {
     return $this->hasMany(Subject::class, 'class_id');

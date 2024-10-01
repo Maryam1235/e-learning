@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
+use App\Models\User;
 use App\Models\Subject;
 use App\Models\QuizResult;
 use App\Models\UserAnswer;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Imports\QuizResultsImport;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -49,12 +51,22 @@ class QuizController extends Controller
     return view('admin.quiz.show', compact('quiz'));
     }
 
-    public function createQuiz(){
-        $classes = SchoolClass::all();
-        $subjects = Subject::all();
-        return view ('teacher.quiz.quizForm', compact('classes','subjects'));
+    // public function createQuiz(){
+    //     $classes = SchoolClass::all();
+    //     $subjects = Subject::all();
+    //     return view ('teacher.quiz.quizForm', compact('classes','subjects'));
+    // }
+    public function createQuiz()
+    {
+        $userId = Auth::id();
+        $teacher = User::with('classes.subjects')->findOrFail($userId);
+    
+        // Get only the assigned classes for the teacher
+        $classes = $teacher->classes;
+    
+        return view('teacher.quiz.quizForm', compact('classes'));
     }
-
+    
     public function adminCreateQuiz(){
         $classes = SchoolClass::all();
         $subjects = Subject::all();
@@ -62,12 +74,39 @@ class QuizController extends Controller
     }
 
 
-public function getSubjectsByClass($classId)
-{
-    $subjects = Subject::where('school_class_id', $classId)->get();
+// public function getSubjectsByClass($classId)
+// {
+//     $subjects = Subject::where('school_class_id', $classId)->get();
    
 
+//     return response()->json($subjects);
+// }
+public function getSubjectsByClass($classId)
+{
+    $userId = Auth::id(); // Get the logged-in teacher's ID
+
+    // Fetch subjects assigned to the teacher for the selected class
+    $subjects = DB::table('teacher_class_subject_pivots')
+        ->join('subjects', 'teacher_class_subject_pivots.subject_id', '=', 'subjects.id')
+        ->where('teacher_class_subject_pivots.user_id', $userId)
+        ->where('teacher_class_subject_pivots.class_id', $classId)
+        ->select('subjects.id', 'subjects.name')
+        ->get();
+
     return response()->json($subjects);
+//     $userId = Auth::id();
+//     $teacher = User::with('classes.subjects')->findOrFail($userId);
+
+//     // Find the class the teacher is assigned to
+//     $class = $teacher->classes->find($classId);
+
+//     // If the teacher has the class, return the subjects
+//     if ($class) {
+//         $subjects = $class->subjects;
+//         return response()->json($subjects);
+//     }
+
+//     return response()->json([], 404); // Return empty if no class is found
 }
     public function storeQuiz(Request $request)
     {

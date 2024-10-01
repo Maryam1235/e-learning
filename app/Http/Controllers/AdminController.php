@@ -80,16 +80,25 @@ class AdminController extends Controller
 
 
 
-    public function viewUser(User $user) {
+  
 
-        $user->load('classes'); 
-        foreach ($user->classes as $class) {
-            $class->subjects = Subject::whereIn('id', $class->pivot->pluck('subject_id'))->get();
-        }
-        return view('admin.user', [
-            'user' => $user
-        ]);
-    }
+public function viewUser(User $user)
+{
+    // Get the teacher's classes and subjects using the pivot table
+    $assignedClasses = DB::table('teacher_class_subject_pivots')
+        ->join('school_classes', 'teacher_class_subject_pivots.class_id', '=', 'school_classes.id')
+        ->join('subjects', 'teacher_class_subject_pivots.subject_id', '=', 'subjects.id')
+        ->where('teacher_class_subject_pivots.user_id', $user->id)
+        ->select('school_classes.id as class_id', 'school_classes.name as class_name', 'subjects.name as subject_name')
+        ->get()
+        ->groupBy('class_name'); // Group subjects by class name
+
+    return view('admin.user', [
+        'user' => $user,
+        'assignedClasses' => $assignedClasses
+    ]);
+}
+
 
     public function editForm(User $user){
         return view('admin.editUser', [

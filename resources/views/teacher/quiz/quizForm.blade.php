@@ -33,7 +33,7 @@
                            
 
                               <!-- Select Class -->
-                              <div class="form-group">
+                              {{-- <div class="form-group">
                                 <label for="class_id">Select Class</label>
                                 <select name="class_id" id="class_id" class="form-control" required>
                                     <option value="">Select Class</option>
@@ -46,6 +46,29 @@
                                 @enderror
                             </div>
 
+                            <!-- Subject Dropdown -->
+                            <div class="form-group">
+                                <label for="subject_id">Select Subject</label>
+                                <select name="subject_id" id="subject_id" class="form-control" required>
+                                    <option value="">Select Subject</option>
+                                </select>
+                                @error('subject_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div> --}}
+                            <div class="form-group">
+                                <label for="class_id">Select Class</label>
+                                <select name="class_id" id="class_id" class="form-control" required>
+                                    <option value="">Select Class</option>
+                                    @foreach($classes as $class)
+                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('class_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            
                             <!-- Subject Dropdown -->
                             <div class="form-group">
                                 <label for="subject_id">Select Subject</label>

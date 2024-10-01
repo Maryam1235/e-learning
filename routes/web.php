@@ -160,6 +160,8 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     Route::post('assignments/{assignment}/submissions', [SubmissionController::class, 'store'])->name('submissions.store');
     Route::get('submissions/view/{submission}', [SubmissionController::class, 'showSubmission'])->name('submission.show');
 
+    Route::get('/teacher/get-subjects/{classId}', [AssignmentController::class, 'teacherGetSubjectsByClass']);
+
 
     //blog
     Route::get('/teacher/blogs', [TeacherController::class, 'blog'])->name('teacher.blog');

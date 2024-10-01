@@ -9,19 +9,53 @@ use App\Models\Assignment;
 use App\Models\Submission;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
-    public function assignmentForm(){
-        $classes = SchoolClass::all(); 
-        $subjects = Subject::all(); 
-        return view('teacher.assignments.assignmentForm',[
-            'classes' => $classes,
-            'subjects' => $subjects
-        ]);
-    }
+    // public function assignmentForm(){
+    //     $classes = SchoolClass::all(); 
+    //     $subjects = Subject::all(); 
+    //     return view('teacher.assignments.assignmentForm',[
+    //         'classes' => $classes,
+    //         'subjects' => $subjects
+    //     ]);
+    // }
+
+    public function assignmentForm()
+{
+    $userId = Auth::id(); // Get the logged-in teacher's ID
+
+    // Fetch classes assigned to the teacher
+    $classes = DB::table('teacher_class_subject_pivots')
+        ->join('school_classes', 'teacher_class_subject_pivots.class_id', '=', 'school_classes.id')
+        ->where('teacher_class_subject_pivots.user_id', $userId)
+        ->select('school_classes.id', 'school_classes.name')
+        ->distinct() // Ensure distinct classes are returned
+        ->get();
+
+    return view('teacher.assignments.assignmentForm', [
+        'classes' => $classes
+    ]);
+}
+
+public function teacherGetSubjectsByClass($classId)
+{
+    $userId = Auth::id(); // Get the logged-in teacher's ID
+
+    // Fetch subjects assigned to the teacher for the selected class
+    $subjects = DB::table('teacher_class_subject_pivots')
+        ->join('subjects', 'teacher_class_subject_pivots.subject_id', '=', 'subjects.id')
+        ->where('teacher_class_subject_pivots.user_id', $userId)
+        ->where('teacher_class_subject_pivots.class_id', $classId)
+        ->select('subjects.id', 'subjects.name')
+        ->get();
+
+    return response()->json($subjects);
+}
+
 
 
     public function addAssignment(Request $request)

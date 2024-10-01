@@ -75,7 +75,7 @@
     document.getElementById('class_id').addEventListener('change', function() {
     const classId = this.value;
     
-    fetch(`/get-subjects/${classId}`)
+    fetch(`/teacher/get-subjects/${classId}`)
         .then(response => response.json())
         .then(data => {
             const subjectSelect = document.getElementById('subject_id');

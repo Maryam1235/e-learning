@@ -9,6 +9,7 @@ use App\Models\Material;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 // use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -34,15 +35,19 @@ class TeacherController extends Controller
             'school_classes' => $school_classes
         ]);
     }
-    public function teacherClasses(){
-        $userId = Auth::id(); 
-        $user = User::findOrFail($userId); 
-        $schoolClasses = $user->classes;
-        // $schoolClasses = SchoolClass::all();
-        return view ('teacher.classes', [
-            'schoolClasses' => $schoolClasses
-        ]);
-    }
+  
+
+    public function teacherClasses()
+{
+    $userId = Auth::id(); 
+    $user = User::findOrFail($userId); 
+
+    $schoolClasses = $user->classes->unique('id');
+
+    return view('teacher.classes', [
+        'schoolClasses' => $schoolClasses
+    ]);
+}
 
 
     public function teacherAddClass(Request $request) {
@@ -57,14 +62,32 @@ class TeacherController extends Controller
        
     }
 
-    public function teacherViewClass(SchoolClass $school_class){
+    // public function teacherViewClass(SchoolClass $school_class){
        
-        $subjects = $school_class->subjects;
-        return view ('teacher.class', [
-            'subjects' => $subjects ,
-            'school_class' => $school_class
-        ]);
-    }
+    //     $subjects = $school_class->subjects;
+    //     return view ('teacher.class', [
+    //         'subjects' => $subjects ,
+    //         'school_class' => $school_class
+    //     ]);
+    // }
+
+    public function teacherViewClass(SchoolClass $school_class)
+{
+    $userId = Auth::id();
+
+    // Get subjects assigned to the teacher for the selected class
+    $subjects = DB::table('teacher_class_subject_pivots')
+        ->join('subjects', 'teacher_class_subject_pivots.subject_id', '=', 'subjects.id')
+        ->where('teacher_class_subject_pivots.user_id', $userId)
+        ->where('teacher_class_subject_pivots.class_id', $school_class->id)
+        ->select('subjects.id', 'subjects.name')
+        ->get();
+
+    return view('teacher.class', [
+        'subjects' => $subjects,
+        'school_class' => $school_class
+    ]);
+}
 
     public function subjectForm(SchoolClass $school_class){
         return view('teacher.subjectForm' , [
