@@ -38,7 +38,10 @@ class SchoolClass extends Model
                 ->withPivot('user_id'); // If you want to access the user_id in the pivot table
 }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     public function assignments()
     {
         return $this->hasMany(Assignment::class, 'class_id');

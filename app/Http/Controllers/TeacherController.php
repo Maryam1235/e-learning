@@ -35,6 +35,7 @@ class TeacherController extends Controller
             'school_classes' => $school_classes
         ]);
     }
+<<<<<<< Updated upstream
   
 
     public function teacherClasses()
@@ -48,6 +49,17 @@ class TeacherController extends Controller
         'schoolClasses' => $schoolClasses
     ]);
 }
+=======
+    public function teacherClasses(){
+        $userId = Auth::id(); 
+        $user = User::findOrFail($userId); 
+        $schoolClasses = $user->classes;
+        // $schoolClasses = SchoolClass::all();
+        return view ('teacher.classes', [
+            'schoolClasses' => $schoolClasses
+        ]);
+    }
+>>>>>>> Stashed changes
 
 
     public function teacherAddClass(Request $request) {

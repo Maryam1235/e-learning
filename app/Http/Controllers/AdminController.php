@@ -6,11 +6,17 @@ use App\Models\User;
 use App\Models\Subject;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
+<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\TeacherSubjectClass;
 use App\Models\TeacherClassSubjectPivot;
 
+=======
+use Illuminate\Support\Facades\DB;
+use App\Models\TeacherSubjectClass;
+use App\Models\TeacherClassSubjectPivot;
+>>>>>>> Stashed changes
 
 class AdminController extends Controller
 {
@@ -80,6 +86,7 @@ class AdminController extends Controller
 
 
 
+<<<<<<< Updated upstream
   
 
 public function viewUser(User $user)
@@ -99,6 +106,26 @@ public function viewUser(User $user)
     ]);
 }
 
+=======
+    // public function viewUser(User $user){
+        
+    //     return view ('admin.user', [
+    //         'user' => $user
+    //     ]);
+
+    // }
+
+    public function viewUser(User $user) {
+
+        $user->load('classes'); 
+        foreach ($user->classes as $class) {
+            $class->subjects = Subject::whereIn('id', $class->pivot->pluck('subject_id'))->get();
+        }
+        return view('admin.user', [
+            'user' => $user
+        ]);
+    }
+>>>>>>> Stashed changes
 
     public function editForm(User $user){
         return view('admin.editUser', [
@@ -127,6 +154,7 @@ public function viewUser(User $user)
     }
 
 
+<<<<<<< Updated upstream
     public function updateUserStatus(Request $request, User $user)
     {
         $user->status = $request->status;
@@ -158,6 +186,8 @@ public function viewUser(User $user)
 
 
 
+=======
+>>>>>>> Stashed changes
     public function createAdminUser()
     {
         $school_classes = SchoolClass::all();
@@ -184,6 +214,20 @@ public function viewUser(User $user)
     }
 
 
+<<<<<<< Updated upstream
+=======
+    // public function assignClassSubject(User $user)
+    // {
+    //     $teacher = $user;
+    //     // dd($teacher); 
+    //     if (strtolower($teacher->role) !== 'teacher') {
+    //         abort(403);
+    //     }
+    //     $classes = SchoolClass::all();
+        
+    //     return view('admin.adminUsers.assign-class-subject', compact( 'teacher','classes'));
+    // }
+>>>>>>> Stashed changes
 
     public function assignClassSubject($userId)
 {
@@ -194,6 +238,7 @@ public function viewUser(User $user)
     return view('admin.adminUsers.assign-class-subject', compact('teacher', 'classes', 'subjects'));
 }
 
+<<<<<<< Updated upstream
 // public function storeClassSubjectAssignment(Request $request, $teacherId)
 // {
 //     $validated = $request->validate([
@@ -216,6 +261,8 @@ public function viewUser(User $user)
 //     return redirect()->route('admin.users')->with('success', 'Classes and subjects assigned successfully!');
 // }
 
+=======
+>>>>>>> Stashed changes
 public function storeClassSubjectAssignment(Request $request, $teacherId)
 {
     $validated = $request->validate([
@@ -224,6 +271,7 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
     ]);
 
     foreach ($validated['classes'] as $index => $classId) {
+<<<<<<< Updated upstream
         $subjectId = $validated['subjects'][$index];
         
         // Check if this class-subject pair is already assigned to the teacher
@@ -239,6 +287,13 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
                 'user_id' => $teacherId,
                 'class_id' => $classId,
                 'subject_id' => $subjectId,
+=======
+        if (!empty($validated['subjects'][$index])) {
+            DB::table('teacher_class_subject_pivots')->insert([
+                'user_id' => $teacherId,
+                'class_id' => $classId,
+                'subject_id' => $validated['subjects'][$index],
+>>>>>>> Stashed changes
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -249,6 +304,31 @@ public function storeClassSubjectAssignment(Request $request, $teacherId)
 }
 
 
+<<<<<<< Updated upstream
 
+=======
+    // public function storeClassSubjectAssignment(Request $request, User $user)
+    // {
+    //     if (strtolower($user->role) !== 'teacher') {
+    //         abort(403);
+    //     }
+    //     $request->validate([
+    //         'class_id' => 'required|exists:school_classes,id',
+    //         'subject_id' => 'required|exists:subjects,id',
+    //     ]);
+    
+
+    //     // $teacher->classes()->attach($request->input('class_id'));
+    //     TeacherClassSubjectPivot::create([
+    //         'user_id' => $user->id, 
+    //         'class_id' => $request->input('class_id'),
+    //         'subject_id' => $request->input('subject_id'), 
+    //         'created_at' => now(),
+    //         'updated_at' => now(),
+    //     ]);
+
+    //     return redirect()->route('admin.users');
+    // }
+>>>>>>> Stashed changes
 
 }

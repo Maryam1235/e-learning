@@ -82,6 +82,7 @@
                     <div class="card">
                         <div class="card-body">
                             <table id="subject" class="table table-bordered table-striped">
+<<<<<<< Updated upstream
                               <thead>
                                   <tr>
                                       <th>Name</th>
@@ -97,6 +98,23 @@
                                   @endforeach
                               </tbody>
                           </table>
+=======
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($subjects as $subject)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('teacher.subjects', ['class' => $school_class->id, 'subject' => $subject->id]) }}" class="btn btn-secondary">{{ $subject->name }} Materials </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>

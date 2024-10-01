@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 use App\Imports\QuizResultsImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< Updated upstream
+=======
+use App\Imports\QuizResultsImport;
+>>>>>>> Stashed changes
 use Maatwebsite\Excel\Facades\Excel;
 
 
