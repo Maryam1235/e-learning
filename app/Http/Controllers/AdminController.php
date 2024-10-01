@@ -6,13 +6,11 @@ use App\Models\User;
 use App\Models\Subject;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
-<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Hash;
-=======
 use Illuminate\Support\Facades\DB;
 use App\Models\TeacherSubjectClass;
 use App\Models\TeacherClassSubjectPivot;
->>>>>>> Stashed changes
+
 
 class AdminController extends Controller
 {
@@ -79,14 +77,6 @@ class AdminController extends Controller
 
 
 
-    // public function viewUser(User $user){
-        
-    //     return view ('admin.user', [
-    //         'user' => $user
-    //     ]);
-
-    // }
-
     public function viewUser(User $user) {
 
         $user->load('classes'); 
@@ -124,7 +114,6 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    // update status
 
     public function updateUserStatus(Request $request, User $user)
     {
@@ -183,17 +172,6 @@ class AdminController extends Controller
     }
 
 
-    // public function assignClassSubject(User $user)
-    // {
-    //     $teacher = $user;
-    //     // dd($teacher); 
-    //     if (strtolower($teacher->role) !== 'teacher') {
-    //         abort(403);
-    //     }
-    //     $classes = SchoolClass::all();
-        
-    //     return view('admin.adminUsers.assign-class-subject', compact( 'teacher','classes'));
-    // }
 
     public function assignClassSubject($userId)
 {
