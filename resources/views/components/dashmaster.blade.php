@@ -175,20 +175,14 @@
                                 </li><br>
 
                                 </li>
-                                {{-- <li class="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link "
                                         href="/teacher/quizzes/{quiz}/results">
                                         <span class="nav-icon fa ion-clipboard"></span>
                                         <p>Quiz  Results</p>
                                     </a>
-                                </li> --}}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+                                </li>
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                 <li class="nav-item">
                                     <a class="nav-link "
                                         href="{{ route('teacher.onlineSessions') }}">
