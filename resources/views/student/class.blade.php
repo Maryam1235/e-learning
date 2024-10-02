@@ -24,24 +24,20 @@
                                 </thead>
                                 <tbody>
                                     @if($student->schoolClass)
-                                    
-                                    @if($subjects->isEmpty())
-                                        <p>No subjects have been assigned to your class yet.</p>
+                                        @if($subjects->isEmpty())
+                                            <p>No subjects have been assigned to your class yet.</p>
+                                        @else
+                                            @foreach($subjects as $subject)
+                                                <tr>
+                                                    <td>
+                                                        <a href="{{ route('student.subject.materials', $subject->id) }}">{{ $subject->name }}</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     @else
-                                      
-                                        @foreach($subjects as $subject)
-                                        <tr>
-                                            <td>
-                                                <a href="{{ route('student.subject.materials', $subject->id) }}">{{ $subject->name }}</a>
-                                            </td>
-                                       
-                                       </tr> 
-                                     @endforeach
-                                       </tr>   
+                                        <p>You are not enrolled in any class. Please contact the administration.</p>
                                     @endif
-                                @else
-                                    <p>You are not enrolled in any class. Please contact the administration.</p>
-                                @endif
                                 </tbody>
 
                                 </table>

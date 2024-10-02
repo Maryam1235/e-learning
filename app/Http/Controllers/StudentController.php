@@ -23,17 +23,17 @@ class StudentController extends Controller
         ]);
     }
 
-    public function subjects(){
 
-        $student = User::with('schoolClass.subjects')->find(Auth::id());
-        $subjects = $student->schoolClass ? $student->schoolClass->subjects : collect();
+    public function subjects()
+{
+    $student = User::with('schoolClass.adminSubjects')->find(Auth::id());
+    $subjects = $student->schoolClass ? $student->schoolClass->adminSubjects : collect();
 
-        return view('student.class',[
-            'student' => $student,
-            'subjects' => $subjects,
-            
-        ]);
-    }
+    return view('student.class', [
+        'student' => $student,
+        'subjects' => $subjects,
+    ]);
+}
 
     public function showMaterials(Subject $subject)
     {
