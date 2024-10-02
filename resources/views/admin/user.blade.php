@@ -31,34 +31,7 @@
                     <h4>{{$user->school}}</h4>
                 </div>
                     <!-- Display assigned classes and subjects -->
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                {{-- <div class="row">
-=======
-                <div class="row">
->>>>>>> Stashed changes
-=======
-                <div class="row">
->>>>>>> Stashed changes
-                    <h2>Assigned Classes and Subjects:</h2>
-                    @if($user->classes->isNotEmpty())
-                        <ul>
-                            @foreach($user->classes as $class)
-                                <li>
-                                    {{ $class->name }} - 
-                                    @foreach($class->subjects as $subject)
-                                        {{ $subject->name }}
-                                    @endforeach
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p>No classes assigned yet.</p>
-                    @endif
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                </div> --}}
-                <!-- Display assigned classes and subjects -->
+
 
                 <div class="row">
                     <h2>Assigned Classes and Subjects</h2>
@@ -77,13 +50,10 @@
                 </div>
     
               <div >
-=======
-=======
->>>>>>> Stashed changes
+
                 </div>
                 
                 <div >
->>>>>>> Stashed changes
                 <button type="submit" class="btn btn-success btn-primary mt-3 text-center px-3" onclick="window.location.href='/editUser/{{$user->id}}' ">
                     Edit User 
                 </button>

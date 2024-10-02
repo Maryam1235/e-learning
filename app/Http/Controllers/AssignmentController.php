@@ -15,14 +15,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
-    // public function assignmentForm(){
-    //     $classes = SchoolClass::all(); 
-    //     $subjects = Subject::all(); 
-    //     return view('teacher.assignments.assignmentForm',[
-    //         'classes' => $classes,
-    //         'subjects' => $subjects
-    //     ]);
-    // }
 
     public function assignmentForm()
 {

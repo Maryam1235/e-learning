@@ -78,39 +78,12 @@ class QuizController extends Controller
     }
 
 
-// public function getSubjectsByClass($classId)
-// {
-//     $subjects = Subject::where('school_class_id', $classId)->get();
-   
-
-//     return response()->json($subjects);
-// }
 public function getSubjectsByClass($classId)
 {
-    $userId = Auth::id(); // Get the logged-in teacher's ID
-
-    // Fetch subjects assigned to the teacher for the selected class
-    $subjects = DB::table('teacher_class_subject_pivots')
-        ->join('subjects', 'teacher_class_subject_pivots.subject_id', '=', 'subjects.id')
-        ->where('teacher_class_subject_pivots.user_id', $userId)
-        ->where('teacher_class_subject_pivots.class_id', $classId)
-        ->select('subjects.id', 'subjects.name')
-        ->get();
+    $subjects = Subject::where('school_class_id', $classId)->get();
+   
 
     return response()->json($subjects);
-//     $userId = Auth::id();
-//     $teacher = User::with('classes.subjects')->findOrFail($userId);
-
-//     // Find the class the teacher is assigned to
-//     $class = $teacher->classes->find($classId);
-
-//     // If the teacher has the class, return the subjects
-//     if ($class) {
-//         $subjects = $class->subjects;
-//         return response()->json($subjects);
-//     }
-
-//     return response()->json([], 404); // Return empty if no class is found
 }
     public function storeQuiz(Request $request)
     {
