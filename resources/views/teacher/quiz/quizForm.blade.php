@@ -12,7 +12,6 @@
                     <div class="card-body border p-4 rounded">
                         <form action="{{ route('quizzes.store') }}" method="POST">
                             @csrf
-                            <!-- Quiz Title -->
                             <div class="form-group">
                                 <label for="title">Quiz Title</label>
                                 <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
@@ -20,8 +19,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            <!-- Quiz Description -->
                             <div class="form-group">
                                 <label for="description">Quiz Description</label>
                                 <input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" required>
@@ -29,33 +26,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                           
-
-                              <!-- Select Class -->
-                              {{-- <div class="form-group">
-                                <label for="class_id">Select Class</label>
-                                <select name="class_id" id="class_id" class="form-control" required>
-                                    <option value="">Select Class</option>
-                                    @foreach($classes as $class)
-                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('class_id')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <!-- Subject Dropdown -->
-                            <div class="form-group">
-                                <label for="subject_id">Select Subject</label>
-                                <select name="subject_id" id="subject_id" class="form-control" required>
-                                    <option value="">Select Subject</option>
-                                </select>
-                                @error('subject_id')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> --}}
                             <div class="form-group">
                                 <label for="class_id">Select Class</label>
                                 <select name="class_id" id="class_id" class="form-control" required>
@@ -68,8 +38,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            
-                            <!-- Subject Dropdown -->
                             <div class="form-group">
                                 <label for="subject_id">Select Subject</label>
                                 <select name="subject_id" id="subject_id" class="form-control" required>
@@ -79,7 +47,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <!-- Start Time -->
                             <div class="form-group">
                                 <label for="start_time">Start Time</label>
                                 <input type="datetime-local" name="start_time" id="start_time" class="form-control" value="{{ old('start_time') }}" required>
@@ -87,8 +54,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            <!-- End Time -->
                             <div class="form-group">
                                 <label for="end_time">End Time</label>
                                 <input type="datetime-local" name="end_time" id="end_time" class="form-control" value="{{ old('end_time') }}" required>
@@ -96,8 +61,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            <!-- Duration -->
                             <div class="form-group">
                                 <label for="duration">Quiz Duration (in minutes)</label>
                                 <input type="number" name="duration" id="duration" class="form-control" value="{{ old('duration') }}" required>
@@ -105,8 +68,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            <!-- Questions Section -->
                             <div id="questions-container">
                                 <div class="form-group">
                                     <label for="question">Question 1</label>
@@ -136,11 +97,7 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <!-- Add another question button -->
                             <button type="button" class="btn btn-primary mt-3" id="add-question">Add Another Question</button>
-
-                            <!-- Submit Quiz -->
                             <button type="submit" class="btn btn-success mt-3">Create Quiz</button>
                         </form>
                     </div>
@@ -149,8 +106,6 @@
         </div>
     </div>
 </div>
-
-<!-- JavaScript to dynamically add more questions -->
 <script>
     let questionCount = 1;
     document.getElementById('add-question').addEventListener('click', function () {

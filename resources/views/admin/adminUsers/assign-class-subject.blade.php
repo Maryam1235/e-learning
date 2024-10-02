@@ -68,6 +68,7 @@
 @section('body')
 
 <div class="content-wrapper custom-dashboard">
+ <div class="Apadding-c"> 
     <div class="form-container">
         <h3>Assign Class and Subject to {{ $teacher->name }}</h3>
 
@@ -103,9 +104,10 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-secondary add-class-subject">Add Another Class</button>
-            <button type="submit" class="btn btn-primary">Assign Classes and Subjects</button>
+            <button type="button" class="btn btn-secondary add-class-subject">Add Class</button>
+            <button type="submit" class="btn btn-primary">Assign Class</button>
         </form>
+    </div>
     </div>
 </div>
 

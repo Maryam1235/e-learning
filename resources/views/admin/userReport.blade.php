@@ -2,7 +2,6 @@
 
 @section('body')
 <div class="content-wrapper custom-dashboard">
-     <!-- Main Content -->
      <div class="main-content">
       <section class="section">
           <div class="section-header">
@@ -39,7 +38,6 @@
                             <td>{{ $user->role }}</td>
                             <td>{{ $user->getTimeSpentAttribute() }}</td>
                           </tr>
-                          {{-- Illuminate\Support\Facades\ --}}
                         @endforeach
                         </tbody>
                     </table>
