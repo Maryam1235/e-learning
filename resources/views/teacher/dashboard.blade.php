@@ -127,7 +127,7 @@
 
        
 
-            <!-- TO DO List -->
+            {{-- <!-- TO DO List -->
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
@@ -255,7 +255,7 @@
               <div class="card-footer clearfix">
                 <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
               </div>
-            </div>
+            </div> --}}
             <!-- /.card -->
           </section>
           <!-- /.Left col -->
