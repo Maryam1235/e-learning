@@ -18,11 +18,9 @@ class AdminController extends Controller
     public function index(){
         $users = User::all();
         $classes = SchoolClass::all();
-        
-        // dd($users);
         $userCount = User::count();
         $classCount = SchoolClass::count();
-        // $teacherCount = User::where('role',  'teacher')->count();
+        $teachersCount = User::where('role',  'teacher')->count();
         // $studentCount = User::where('role',  'student')->count();
         $inactiveCount = User::where('status', 'inactive')->count();
         
@@ -33,9 +31,9 @@ class AdminController extends Controller
         return view('admin.dashboard',['stat' => [
             'users' => $users,
             'usersCount' => $userCount,
-            'classesCount' => $classCount,
+            'classCount' => $classCount,
             'inactiveCount' =>$inactiveCount,
-            // 'teachers' => $teacherCount,
+            'teachersCount' => $teachersCount,
             // 'students' => $studentCount,
         ],
     

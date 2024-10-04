@@ -6,9 +6,10 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\Subject;
 use App\Models\Material;
+use App\Models\Assignment;
 use App\Models\SchoolClass;
-use Illuminate\Http\Request;
 // use Illuminate\Foundation\Auth\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -20,12 +21,24 @@ class TeacherController extends Controller
 
     public function index(){
         $teacher = Auth::user();
-        $classes = $teacher->classrooms;
-        // $subjects = $teacher->subjects;
+        $classes = $teacher->classes;
+        $totalSubjects = $teacher->teacherSubjects->count();
+        $totalAssignments = Assignment::whereIn('class_id', $classes->pluck('id'))->where('submission_deadline', '>', now())->count(); 
+        $jitegemeeStudents = User::whereIn('class_id', $classes->pluck('id'))
+        ->where('role', 'student')
+        ->where('school', 'jitegemee')
+        ->count();
+        $kawawaStudents = User::whereIn('class_id', $classes->pluck('id'))
+        ->where('role', 'student')
+        ->where('school', 'kawawa')
+        ->count();
         return view('teacher.dashboard',[
             'teacher' => $teacher,
             'classes' => $classes,
-            // 'subjects' => $subjects
+            'totalSubjects' => $totalSubjects,
+            'totalAssignments' => $totalAssignments,
+            'jitegemeeStudents' => $jitegemeeStudents,
+            'kawawaStudents' => $kawawaStudents,
         ]);
     }
 
@@ -50,15 +63,6 @@ class TeacherController extends Controller
     ]);
 }
 
-    // public function teacherClasses(){
-    //     $userId = Auth::id(); 
-    //     $user = User::findOrFail($userId); 
-    //     $schoolClasses = $user->classes;
-    //     // $schoolClasses = SchoolClass::all();
-    //     return view ('teacher.classes', [
-    //         'schoolClasses' => $schoolClasses
-    //     ]);
-    // }
 
 
 

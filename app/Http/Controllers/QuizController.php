@@ -55,21 +55,23 @@ class QuizController extends Controller
     return view('admin.quiz.show', compact('quiz'));
     }
 
-    // public function createQuiz(){
-    //     $classes = SchoolClass::all();
-    //     $subjects = Subject::all();
-    //     return view ('teacher.quiz.quizForm', compact('classes','subjects'));
-    // }
+
     public function createQuiz()
-    {
-        $userId = Auth::id();
-        $teacher = User::with('classes.subjects')->findOrFail($userId);
+{
+    $userId = Auth::id();
     
-        // Get only the assigned classes for the teacher
-        $classes = $teacher->classes;
+    // Fetch teacher with unique classes and subjects assigned
+    $teacher = User::with(['classes' => function($query) {
+        $query->distinct(); // Ensure no duplicate classes
+    }, 'classes.subjects' => function($query) {
+        $query->distinct(); // Ensure no duplicate subjects
+    }])->findOrFail($userId);
     
-        return view('teacher.quiz.quizForm', compact('classes'));
-    }
+    // Get only the assigned classes for the teacher
+    $classes = $teacher->classes->unique('id'); // Use unique() to filter out duplicate classes
+    
+    return view('teacher.quiz.quizForm', compact('classes'));
+}
     
     public function adminCreateQuiz(){
         $classes = SchoolClass::all();
@@ -78,10 +80,27 @@ class QuizController extends Controller
     }
 
 
-public function getSubjectsByClass($classId)
+public function adminGetSubjectsByClass($classId)
 {
     $subjects = Subject::where('school_class_id', $classId)->get();
    
+
+    return response()->json($subjects);
+}
+
+public function getSubjectsByClass($classId)
+{
+    $userId = Auth::id();
+
+    // Find the teacher and get their assigned subjects for the class
+    $teacher = User::findOrFail($userId);
+    
+    // Fetch subjects only assigned to the teacher for the selected class
+    $subjects = $teacher->classes()->where('school_classes.id', $classId)
+                    ->with(['subjects' => function($query) {
+                        $query->distinct(); // Avoid duplicate subjects
+                    }])
+                    ->first()->subjects;
 
     return response()->json($subjects);
 }
@@ -397,12 +416,35 @@ public function submitQuiz(Request $request, Quiz $quiz)
     }
     
 
+    // public function viewQuizResults(Quiz $quiz)
+    // {
+    //     $quizResults = QuizResult::where('quiz_id', $quiz->id)
+    //     ->distinct('student_id')
+    //     ->get();
+    
+    //     return view('teacher.quiz.results', compact('quiz', 'quizResults'));
+    // }
+    public function resultsIndex()
+    {
+       
+        $quizzes = Quiz::all();
+        return view('teacher.quiz.resultList', compact('quizzes'));
+    }
+    
+    // public function viewQuizResults(Quiz $quiz)
+    // {
+    //     // Fetch the quiz results for the selected quiz
+    //     $quizResults = QuizResult::where('quiz_id', $quiz->id)->distinct('student_id')->get();
+    
+    //     return view('teacher.quizzes.results', compact('quiz', 'quizResults'));
+    // }
+    
     public function viewQuizResults(Quiz $quiz)
     {
         $quizResults = QuizResult::where('quiz_id', $quiz->id)
-        ->distinct('student_id')
-        ->get();
-    
+            ->distinct('student_id')
+            ->get();
+        
         return view('teacher.quiz.results', compact('quiz', 'quizResults'));
     }
 
@@ -435,7 +477,10 @@ public function submitQuiz(Request $request, Quiz $quiz)
         return redirect()->route('quizzes.results', $quiz->id);
     }
 
-
+    // public function downloadResultsTemplate(Quiz $quiz)
+    // {
+    //     return Excel::download(new QuizResultsTemplateExport($quiz), 'quiz_results_template.xlsx');
+    // }
     public function adminUploadQuizResults(Request $request, Quiz $quiz)
 {
     Excel::import(new QuizResultsImport($quiz), $request->file('results'));
@@ -526,32 +571,12 @@ public function adminUploadQuiz(Request $request)
     $quiz->start_time = $request->input('start_time');
     $quiz->end_time = $request->input('end_time');
     $quiz->duration = $request->input('duration');
-    $quiz->file_path = $quizFile->getClientOriginalName();
+    $quiz->quiz_file = $quizFile->getClientOriginalName();
     $quiz->save();
 
     // Redirect to the quiz list page
-    return redirect()->route('admin.quiz.index');
+    return redirect()->route('admin.quizzes.index');
 }
-// public function adminUploadQuiz(Request $request)
-// {
-//     // Validate the request
-//     $request->validate([
-//         'quiz_file' => 'required|mimes:pdf,doc,docx|max:2048',
-//     ]);
 
-//     // Store the uploaded file
-//     $quizFile = $request->file('quiz_file');
-//     $quizFile->storeAs('quizzes', $quizFile->getClientOriginalName(), 'public');
-
-//     // Create a new quiz record
-//     $quiz = new Quiz();
-//     $quiz->name = $request->input('name');
-//     $quiz->description = $request->input('description');
-//     $quiz->file_path = $quizFile->getClientOriginalName();
-//     $quiz->save();
-
-//     // Redirect to the quiz list page
-//     return redirect()->route('admin.quizzes.index');
-// }
 
 }

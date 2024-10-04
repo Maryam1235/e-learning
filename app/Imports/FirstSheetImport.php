@@ -6,6 +6,7 @@ use App\Models\Quiz;
 use App\Models\User;
 use App\Models\QuizResult;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Facades\Log;
 
 class FirstSheetImport implements ToModel
 {
@@ -16,25 +17,33 @@ class FirstSheetImport implements ToModel
         $this->quiz = $quiz;
     }
 
-public function model(array $row)
-{
-    if ($row[0] == 'Student Name') {
-        return null;
+    /**
+     * Process each row in the sheet.
+     *
+     * @param array $row
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function model(array $row)
+    {
+        // Skip the header row
+        if ($row[0] === 'Student Name') {
+            return null;
+        }
+
+        // Try to find the student by name, case-insensitive
+        $student = User::where('name', 'ilike', $row[0])->first();
+
+        if ($student) {
+            // If the student is found, create a QuizResult entry
+            return new QuizResult([
+                'student_id' => $student->id,
+                'percentage' => $row[1], // Assuming the second column is the score/percentage
+                'quiz_id'    => $this->quiz->id,
+            ]);
+        } else {
+            // Log missing student and continue
+            Log::warning("Student not found: " . $row[0]);
+            return null; // Skip this row
+        }
     }
-
-    $student = User::where('name','ilike', $row[0])->first();
-    
-    if ($student) {
-    return new QuizResult([
-        // 'student_name' => $row[0],
-        'student_id' => $student->id,
-        'percentage' => $row[1],
-        'quiz_id' => $this->quiz->id,
-    ]);
-} else {
-    throw new \Exception("Student not found: " . $row[0]);
-
-}
-}
-
 }

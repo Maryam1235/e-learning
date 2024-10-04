@@ -138,7 +138,7 @@
     const classId = this.value;
     
     // Fetch subjects based on the selected class
-    fetch(`/get-subjects/${classId}`)
+    fetch(`/teacher/get-subjects/${classId}`)
         .then(response => response.json())
         .then(data => {
             const subjectSelect = document.getElementById('subject_id');

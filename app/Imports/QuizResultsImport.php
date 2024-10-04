@@ -3,8 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Quiz;
-use App\Models\QuizResult;
-use App\Imports\FirstSheetImport;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class QuizResultsImport implements WithMultipleSheets
@@ -16,10 +14,16 @@ class QuizResultsImport implements WithMultipleSheets
         $this->quiz = $quiz;
     }
 
+    /**
+     * Define the sheets to import from the Excel file.
+     *
+     * @return array
+     */
     public function sheets(): array
     {
         return [
-            0 => new FirstSheetImport($this->quiz),
+            0 => new FirstSheetImport($this->quiz), // First sheet handling
+            // You can add more sheets here as needed
         ];
     }
 }

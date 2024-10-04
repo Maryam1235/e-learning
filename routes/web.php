@@ -101,7 +101,7 @@ Route::middleware(['auth','role:admin'])->group(function (){
     //quizzes
     Route::get('/admin/quizzes', [QuizController::class, 'adminIndex'])->name('admin.quizzes.index'); 
     Route::get('/admin/quizzes/create', [QuizController::class, 'adminCreateQuiz'])->name('admin.quizzes.create');
-    Route::get('/admin/get-subjects/{classId}', [QuizController::class, 'getSubjectsByClass']);
+    Route::get('/admin/get-subjects/{classId}', [QuizController::class, 'adminGetSubjectsByClass']);
     Route::post('/admin/quizzes', [QuizController::class, 'adminStoreQuiz'])->name('admin.quizzes.store'); 
     Route::get('admin/quizzes/upload', [QuizController::class,'adminUploadForm'])->name('admin.quizzes.upload');
     Route::post('admin/quizzes/upload', [QuizController::class,'adminUploadQuiz'])->name('admin.quizzes.upload.post');     
@@ -112,6 +112,8 @@ Route::middleware(['auth','role:admin'])->group(function (){
     Route::get('/admin/quizzes/{quiz}/results',[QuizController::class, 'adminViewQuizResults'])->name('admin.quizzes.results');
     Route::get('/admin/quizzes/{quiz}/upload-results-form', [QuizController::class,'adminUploadQuizResultsForm'])->name('admin.quizzes.uploadResults.form');
     Route::post('/admin/quizzes/{quiz}/upload-results', [QuizController::class,'adminUploadQuizResults'])->name('admin.quizzes.uploadResults');
+
+    Route::get('/admin/quizzes/{quiz}/download-results-template', [QuizController::class, 'downloadResultsTemplate'])->name('quizzes.downloadTemplate');
 
 
     //blog 
@@ -191,13 +193,15 @@ Route::middleware(['auth','role:teacher'])->group(function (){
     //quizzes
     Route::get('/teacher/quizzes', [QuizController::class, 'index'])->name('quizzes.index'); 
     Route::get('/teacher/quizzes/create', [QuizController::class, 'createQuiz'])->name('quizzes.create');
-    Route::get('/get-subjects/{classId}', [QuizController::class, 'getSubjectsByClass']);
+    // Route::get('/get-subjects/{classId}', [QuizController::class, 'getSubjectsByClass']);
     Route::post('/teacher/quizzes', [QuizController::class, 'storeQuiz'])->name('quizzes.store');      
     Route::get('/teacher/quizzes/{quiz}', [QuizController::class, 'showQuiz'])->name('quizzes.show');  
     Route::get('/teacher/quizzes/{quiz}/edit', [QuizController::class, 'editQuiz'])->name('quizzes.edit'); 
     Route::put('/teacher/quizzes/{quiz}', [QuizController::class, 'updateQuiz'])->name('quizzes.update');  
     Route::delete('/teacher/quizzes/{quiz}', [QuizController::class, 'destroyQuiz'])->name('quizzes.destroy'); 
-    Route::get('/teacher/quizzes/{quiz}/results',[QuizController::class, 'viewQuizResults'])->name('quizzes.results');
+
+    Route::get('/teacher/quizzes/results', [QuizController::class, 'resultsIndex'])->name('teacher.quizzes.results'); 
+    Route::get('/teacher/quizzes/{quiz}/results',[QuizController::class, 'viewQuizResults'])->name('view.quizzes.results');
     Route::post('/teacher/quizzes/{quiz}/upload-results', [QuizController::class,'uploadQuizResults'])->name('quizzes.uploadResults');
 
 

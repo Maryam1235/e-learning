@@ -175,16 +175,14 @@
                                 </li><br>
 
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link "
-                                        href="/teacher/quizzes/{quiz}/results">
+                                        href="{{route('teacher.quizzes.results')}}">
                                         <span class="nav-icon fa ion-clipboard"></span>
                                         <p>Quiz  Results</p>
                                     </a>
-                                </li>
+                                </li> --}}
                               
-
-
                                 <li class="nav-item">
                                     <a class="nav-link "
                                         href="{{ route('teacher.onlineSessions') }}">

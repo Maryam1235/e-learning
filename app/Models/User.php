@@ -61,17 +61,21 @@ public function classes()
 }
 
 
-
 public function subjects()
 {
     return $this->hasMany(Subject::class, 'class_id');
 }
+
 public function teacherSubjects()
 {
     return $this->belongsToMany(Subject::class, 'teacher_class_subject_pivots', 'user_id', 'subject_id')
                 ->withPivot('class_id');
 }
 
+public function assignments()
+{
+    return $this->hasManyThrough(Assignment::class, SchoolClass::class, 'user_id', 'class_id');
+}
 
     /**
      * The attributes that should be hidden for serialization.

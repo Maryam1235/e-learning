@@ -42,7 +42,7 @@
                   <tr>
                     <td>{{ $quizResult->student->name }}</td>
                     {{-- <td>{{ $quizResult->score }} / {{ $result->total_questions }}</td> --}}
-                    <td>{{ $quizResult->percentage }}%}</td>
+                    <td>{{ $quizResult->percentage }}%</td>
                     {{-- <td>
                         <a href="{{ route('quizzes.student.results', [$quiz->id, $result->student_id]) }}">View Details</a>
                 
