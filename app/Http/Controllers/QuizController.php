@@ -329,26 +329,42 @@ public function adminDestroyQuiz(Quiz $quiz)
 }
 
 
+
+
 public function startQuiz(Quiz $quiz)
 {
-    // Retrieve the quiz questions along with options
-    $questions = $quiz->questions;
+    $studentId = auth()->user()->id;
+    $hasSubmitted = QuizResult::where('quiz_id', $quiz->id)
+                              ->where('student_id', $studentId)
+                              ->exists();
 
-    // Pass the quiz and questions to the view
+    if ($hasSubmitted) {
+        return redirect()->back()->with('error', 'You have already taken this quiz. You cannot retake it.');
+    }
+    $questions = $quiz->questions;
     return view('student.quizzes.start', compact('quiz', 'questions'));
 }
+
+
+
+
 
 
 
 public function takeQuiz(Quiz $quiz)
 {
     if (now()->greaterThan($quiz->end_time)) {
-
         return redirect()->back()->with('error', 'The deadline for this quiz has passed. You cannot start it.');
     }
+    $studentId = auth()->user()->id;
+    $hasSubmitted = QuizResult::where('quiz_id', $quiz->id)
+                              ->where('student_id', $studentId)
+                              ->exists();
 
+    if ($hasSubmitted) {
+        return redirect()->back()->with('error', 'You have already taken this quiz. You cannot retake it.');
+    }
     $questions = $quiz->questions;
-
     return view('student.quiz.start', compact('quiz', 'questions'));
 }
 
@@ -357,7 +373,7 @@ public function takeQuiz(Quiz $quiz)
 public function submitQuiz(Request $request, Quiz $quiz)
 {
     $studentId = auth()->user()->id;
-    $submittedAnswers = $request->input('answers'); // Array of question_id => selected_option
+    $submittedAnswers = $request->input('answers'); 
 
     $score = 0;
     $totalQuestions = $quiz->questions->count();
@@ -365,8 +381,6 @@ public function submitQuiz(Request $request, Quiz $quiz)
     foreach ($quiz->questions as $question) {
         if (isset($submittedAnswers[$question->id])) {
             $submittedAnswer = $submittedAnswers[$question->id];
-
-            // Store student's answer in UserAnswer table
             UserAnswer::create([
                 'user_id' => $studentId,
                 'quiz_id' => $quiz->id,
@@ -381,10 +395,10 @@ public function submitQuiz(Request $request, Quiz $quiz)
         }
     }
 
-    // Calculate percentage score
+ 
     $percentageScore = ($score / $totalQuestions) * 100;
 
-    // Save the result in QuizResult table
+    
     QuizResult::updateOrCreate(
         [
             'quiz_id' => $quiz->id,
@@ -397,7 +411,7 @@ public function submitQuiz(Request $request, Quiz $quiz)
         ]
     );
 
-    // Redirect to results page with success message
+    
     return redirect()->route('quizzes.results', $quiz->id)
                      ->with('success', 'Quiz submitted successfully! Your score is ' . round($percentageScore, 2) . '%.');
 }
@@ -405,13 +419,13 @@ public function submitQuiz(Request $request, Quiz $quiz)
 
     public function showQuizResults(Quiz $quiz)
     {
-        // Retrieve the quiz result for the logged-in student
+       
         $studentId = auth()->user()->id;
         $quizResult = QuizResult::where('quiz_id', $quiz->id)
                                 ->where('student_id', $studentId)
                                 ->firstOrFail();
     
-        // Pass the result to the view
+       
         return view('student.quiz.results', compact('quizResult'));
     }
     
