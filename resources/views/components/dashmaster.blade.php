@@ -61,7 +61,7 @@
                                     <p>Classes</p>
                                 </a>
                             </li><br>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link "
                                     href="{{route('admin.quizzes.index')}}">
                                     <span class="nav-icon fa fa-file-text "></span>
@@ -95,7 +95,7 @@
                                     <span class="nav-icon fa ion-clipboard"></span>
                                     <p>To_do_List</p>
                                 </a>
-                            </li>
+                            </li> -->
                         @endif
 
                         @if (auth()->check() && auth()->user()->role === 'teacher')
@@ -143,7 +143,7 @@
                                         <p>Classes</p>
                                     </a>
                                 </li><br>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link "
                                         href="{{route('teacher.assignments')}}">
                                         <span class="nav-icon fa fa-clipboard"></span>
@@ -210,7 +210,7 @@
                                         <span class="nav-icon fa ion-clipboard"></span>
                                         <p>To_do_List</p>
                                     </a>
-                                </li>
+                                </li> -->
                     @endif
 
 
@@ -251,7 +251,7 @@
                                     <p>Class</p>
                                 </a>
                             </li><br>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link "
                                     href="{{route('student.assignments')}}">
                                     <span class="nav-icon fa fa-file-text"></span>
@@ -292,7 +292,7 @@
                                     <span class="nav-icon fa ion-clipboard"></span>
                                     <p>To_do_List</p>
                                 </a>
-                            </li>
+                            </li> -->
                         @endif
 
 
